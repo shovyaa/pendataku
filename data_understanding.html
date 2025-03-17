@@ -512,10 +512,10 @@ Requirement already satisfied: typing-extensions&gt;=4.6.0 in c:\users\acer\appd
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># langkah 5 koneksi ke database untuk mengambil data</span>
 <span class="c1"># Connection string untuk database MySQL</span>
-<span class="n">mysql_connection_str</span> <span class="o">=</span> <span class="s2">&quot;mysql+pymysql:///defaultdb&quot;</span>
+<span class="n">mysql_connection_str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
 
 <span class="c1"># Connection string untuk database PostgreSQL</span>
-<span class="n">postgres_connection_str</span> <span class="o">=</span> <span class="s2">&quot;postgresql+psycopg2:///defaultdb&quot;</span>
+<span class="n">postgres_connection_str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
 </pre></div>
 </div>
 </div>
@@ -3313,7 +3313,7 @@ Requirement already satisfied: typing-extensions&gt;=4.6.0 in c:\users\acer\appd
 <span class="kn">from</span><span class="w"> </span><span class="nn">sqlalchemy</span><span class="w"> </span><span class="kn">import</span> <span class="n">create_engine</span>
 
 <span class="c1"># 🔹 Koneksi ke database PostgreSQL</span>
-<span class="n">postgres_connection_str</span> <span class="o">=</span> <span class="s2">&quot;postgresql+psycopg2:///defaultdb&quot;</span>
+<span class="n">postgres_connection_str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
 <span class="n">engine_postgres</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="n">postgres_connection_str</span><span class="p">)</span>
 
 <span class="c1"># 🔹 Ambil data dari tabel datahitung di PostgreSQL</span>
