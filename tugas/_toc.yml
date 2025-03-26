@@ -6,5 +6,5 @@ root: intro
 chapters:
 - file: markdown
 - file: notebooks
-- file: data_understanding
+- file: dataunderstanding
 - file: markdown-notebooks
