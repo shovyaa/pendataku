@@ -18,18 +18,27 @@ Traceback (most recent call last):
     raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
 nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
 ------------------
-# Langkah 4: Import library yang diperlukan
+# Step 1: Upload file CSV
+from google.colab import files
+uploaded = files.upload()
+
+# Step 2: Import library
 import pandas as pd
-from sqlalchemy import create_engine
+
+# Step 3: Baca file CSV
+filename = list(uploaded.keys())[0]
+df = pd.read_csv(filename)
+
 ------------------
 
 
 [1;31m---------------------------------------------------------------------------[0m
 [1;31mModuleNotFoundError[0m                       Traceback (most recent call last)
-Cell [1;32mIn[2], line 2[0m
-[0;32m      1[0m [38;5;66;03m# Langkah 4: Import library yang diperlukan[39;00m
-[1;32m----> 2[0m [38;5;28;01mimport[39;00m[38;5;250m [39m[38;5;21;01mpandas[39;00m[38;5;250m [39m[38;5;28;01mas[39;00m[38;5;250m [39m[38;5;21;01mpd[39;00m
-[0;32m      3[0m [38;5;28;01mfrom[39;00m[38;5;250m [39m[38;5;21;01msqlalchemy[39;00m[38;5;250m [39m[38;5;28;01mimport[39;00m create_engine
+Cell [1;32mIn[1], line 2[0m
+[0;32m      1[0m [38;5;66;03m# Step 1: Upload file CSV[39;00m
+[1;32m----> 2[0m [38;5;28;01mfrom[39;00m[38;5;250m [39m[38;5;21;01mgoogle[39;00m[38;5;21;01m.[39;00m[38;5;21;01mcolab[39;00m[38;5;250m [39m[38;5;28;01mimport[39;00m files
+[0;32m      3[0m uploaded [38;5;241m=[39m files[38;5;241m.[39mupload()
+[0;32m      5[0m [38;5;66;03m# Step 2: Import library[39;00m
 
-[1;31mModuleNotFoundError[0m: No module named 'pandas'
+[1;31mModuleNotFoundError[0m: No module named 'google'
 
