@@ -32,8 +32,8 @@ scaler = StandardScaler()
 X_scaled = scaler.fit_transform(df)
 
 # 3. Pilih dua centroid awal (misalnya dari data ke-15 dan ke-20)
-centroid_1 = X_scaled[1]  # Index 14 (baris ke-15)
-centroid_2 = X_scaled[114]  # Index 19 (baris ke-20)
+centroid_1 = X_scaled[12]  # Index 14 (baris ke-15)
+centroid_2 = X_scaled[65]  # Index 19 (baris ke-20)
 
 # 4. Fungsi untuk menghitung jarak Euclidean
 def euclidean_distance(point, centroid):
@@ -56,8 +56,8 @@ print(df.to_string(index=True))
 ------------------
 
 
-[1;31m---------------------------------------------------------------------------[0m
-[1;31mModuleNotFoundError[0m                       Traceback (most recent call last)
+[1;31m-----------------------------------------------------------[0m
+[1;31mModuleNotFoundError[0m       Traceback (most recent call last)
 Cell [1;32mIn[1], line 1[0m
 [1;32m----> 1[0m [38;5;28;01mimport[39;00m[38;5;250m [39m[38;5;21;01mnumpy[39;00m[38;5;250m [39m[38;5;28;01mas[39;00m[38;5;250m [39m[38;5;21;01mnp[39;00m
 [0;32m      2[0m [38;5;28;01mimport[39;00m[38;5;250m [39m[38;5;21;01mpandas[39;00m[38;5;250m [39m[38;5;28;01mas[39;00m[38;5;250m [39m[38;5;21;01mpd[39;00m
