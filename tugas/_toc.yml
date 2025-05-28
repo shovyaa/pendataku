@@ -10,5 +10,5 @@ chapters:
 - file: markdown-notebooks
 - file: uts
   title: Project Uts
-- file: pendatkmeans
-  title: K means Clustering
+- file: clustering
+  title: Clustering
