@@ -1,0 +1,1231 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>KBinsDiscretizer &#8212; My sample book</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'KBinsDiscretizer';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Clustering" href="clustering.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo.png" class="logo__image only-light" alt="My sample book - Home"/>
+    <script>document.write(`<img src="_static/logo.png" class="logo__image only-dark" alt="My sample book - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Intro Data Mining
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="data.html"><strong>Data Undertanding</strong></a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="uts.html"><strong>Project UTS</strong></a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="clustering.html"><strong>Clustering</strong></a></li>
+
+
+
+
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">KBinsDiscretizer</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2FKBinsDiscretizer.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/KBinsDiscretizer.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>KBinsDiscretizer</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#konsep-dikritisasi">Konsep Dikritisasi</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pengertian-dikstritisasi">Pengertian Dikstritisasi</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tujuan-diskritisasi">Tujuan Diskritisasi</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#metode-dikritisasi">Metode Dikritisasi</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-iris-sebelum-didikritisasi">Data iris sebelum didikritisasi</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#naive-bayes-data-asli-tanpa-diskritisasi">Naive Bayes – Data Asli (Tanpa Diskritisasi)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#decision-tree-data-asli-tanpa-diskritisasi">Decision Tree – Data Asli (Tanpa Diskritisasi)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-iris-setelah-didikritisasi">Data iris setelah didikritisasi</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dikstritisasi-fitur-data-iris-menggunakan-k-means-clustering">Dikstritisasi fitur data iris menggunakan K-means Clustering</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#diskritisasi-data-iris-menggunakan-kbinsdiscretizer-dengan-strategi-kmeans">Diskritisasi Data Iris Menggunakan KBinsDiscretizer dengan Strategi KMeans</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#visualisasi-batas-bin">Visualisasi Batas Bin</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#klasifikasi-naive-bayes-setelah-diskritisasi">Klasifikasi Naive Bayes setelah Diskritisasi</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#klasifikasi-data-iris-menggunakan-categorical-naive-bayes-dan-diskritisasi-dengan-kbinsdiscretizer">Klasifikasi Data Iris Menggunakan Categorical Naive Bayes dan Diskritisasi dengan KBinsDiscretizer</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#klasifikasi-data-iris-menggunakan-decision-tree-dan-diskritisasi-kbinsdiscretizer-dengan-visualisasi-pohon-keputusan">Klasifikasi Data Iris Menggunakan Decision Tree dan Diskritisasi KBinsDiscretizer dengan Visualisasi Pohon Keputusan</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluasi-metode">Evaluasi metode</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#perbandingan-akurasi-naive-bayes-dan-decision-tree-pada-data-iris-data-numerik-vs-data-diskritisasi-kbinsdiscretizer">Perbandingan Akurasi Naive Bayes dan Decision Tree pada Data Iris: Data Numerik vs Data Diskritisasi (KBinsDiscretizer)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#akurasi-model">📊 <strong>Akurasi Model:</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#classification-report-decision-tree-diskret">📄 <strong>Classification Report (Decision Tree Diskret):</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#arti-dari-metrik-metrik-tersebut">Arti dari metrik-metrik tersebut:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#penafsiran-per-kelas">📌 Penafsiran per kelas:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#kesimpulan-umum">🧠 Kesimpulan Umum:</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="kbinsdiscretizer">
+<h1>KBinsDiscretizer<a class="headerlink" href="#kbinsdiscretizer" title="Link to this heading">#</a></h1>
+<section id="konsep-dikritisasi">
+<h2>Konsep Dikritisasi<a class="headerlink" href="#konsep-dikritisasi" title="Link to this heading">#</a></h2>
+<section id="pengertian-dikstritisasi">
+<h3>Pengertian Dikstritisasi<a class="headerlink" href="#pengertian-dikstritisasi" title="Link to this heading">#</a></h3>
+<p>Diskritisasi adalah proses mengubah data numerik atau kontinu menjadi bentuk data kategorikal atau diskrit. Dalam data numerik, nilai bisa sangat bervariasi dan tak terbatas (misalnya 4.21, 5.37, 7.89, dst.), sementara dalam bentuk diskrit, nilai akan dibagi ke dalam kategori tertentu (misalnya “Rendah”, “Sedang”, “Tinggi”).</p>
+<p>Dengan kata lain, diskritisasi mengubah data kuantitatif menjadi kualitatif atau kategori yang lebih terbatas dan mudah dipahami maupun diproses oleh algoritma tertentu.</p>
+</section>
+<section id="tujuan-diskritisasi">
+<h3>Tujuan Diskritisasi<a class="headerlink" href="#tujuan-diskritisasi" title="Link to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p>Menyederhanakan data agar lebih mudah dianalisis dan divisualisasikan.</p></li>
+<li><p>Mengurangi noise pada data numerik yang kompleks.</p></li>
+<li><p>Memudahkan interpretasi data oleh manusia.</p></li>
+<li><p>Meningkatkan performa algoritma
+klasifikasi tertentu, terutama yang dirancang untuk data kategorikal seperti:</p></li>
+</ol>
+<ul class="simple">
+<li><p>Naive Bayes (CategoricalNB)</p></li>
+<li><p>Decision Tree</p></li>
+</ul>
+<ol class="arabic simple" start="5">
+<li><p>Persiapan untuk teknik data mining atau machine learning yang mengharuskan data dalam bentuk diskrit.</p></li>
+</ol>
+</section>
+<section id="metode-dikritisasi">
+<h3>Metode Dikritisasi<a class="headerlink" href="#metode-dikritisasi" title="Link to this heading">#</a></h3>
+<p>Beberapa metode umum diskritisasi:</p>
+<ol class="arabic simple">
+<li><p>Equal Width Binning</p></li>
+</ol>
+<ul class="simple">
+<li><p>Membagi range nilai menjadi beberapa interval dengan lebar yang sama.</p></li>
+<li><p>Contoh: range 0–100 dibagi ke 4 kategori → masing-masing 25 nilai.</p></li>
+</ul>
+<ol class="arabic simple" start="2">
+<li><p>Equal Frequency Binning</p></li>
+</ol>
+<ul class="simple">
+<li><p>Membagi data sehingga setiap kelompok memiliki jumlah data yang sama.</p></li>
+</ul>
+<ol class="arabic simple" start="3">
+<li><p>Diskritisasi Manual (berbasis domain)</p></li>
+</ol>
+<ul class="simple">
+<li><p>Berdasarkan aturan atau pengetahuan domain tertentu, misalnya nilai ujian:</p></li>
+<li><p>&lt;60: Gagal</p></li>
+<li><p>60–80: Cukup</p></li>
+<li><p>80: Baik</p></li>
+</ul>
+<ol class="arabic simple" start="4">
+<li><p>K-Means Clustering (Diskritisasi Berdasarkan Pola)</p></li>
+</ol>
+<ul class="simple">
+<li><p>Pendekatan data-driven: KMeans digunakan untuk mencari kelompok alami (cluster) dalam distribusi data.</p></li>
+<li><p>Setiap nilai numerik diberi label berdasarkan cluster-nya (misalnya cluster 0, 1, 2).</p></li>
+<li><p>Kelebihannya: lebih adaptif terhadap pola dan distribusi data.</p></li>
+</ul>
+</section>
+</section>
+<section id="data-iris-sebelum-didikritisasi">
+<h2>Data iris sebelum didikritisasi<a class="headerlink" href="#data-iris-sebelum-didikritisasi" title="Link to this heading">#</a></h2>
+<section id="naive-bayes-data-asli-tanpa-diskritisasi">
+<h3>Naive Bayes – Data Asli (Tanpa Diskritisasi)<a class="headerlink" href="#naive-bayes-data-asli-tanpa-diskritisasi" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_iris</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.model_selection</span><span class="w"> </span><span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.naive_bayes</span><span class="w"> </span><span class="kn">import</span> <span class="n">GaussianNB</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">accuracy_score</span>
+
+<span class="c1"># Load data asli</span>
+<span class="n">iris</span> <span class="o">=</span> <span class="n">load_iris</span><span class="p">()</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">data</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">target</span>
+
+<span class="c1"># Split data</span>
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+
+<span class="c1"># Model Naive Bayes</span>
+<span class="n">model_nb</span> <span class="o">=</span> <span class="n">GaussianNB</span><span class="p">()</span>
+<span class="n">model_nb</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="n">y_pred_nb</span> <span class="o">=</span> <span class="n">model_nb</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+
+<span class="c1"># Akurasi</span>
+<span class="n">accuracy_nb</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred_nb</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Akurasi Naive Bayes (data asli): </span><span class="si">{</span><span class="n">accuracy_nb</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">-----------------------------</span>
+<span class="ne">ModuleNotFoundError</span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
+<span class="ne">----&gt; </span><span class="mi">1</span> <span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_iris</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.model_selection</span><span class="w"> </span><span class="kn">import</span> <span class="n">train_test_split</span>
+
+<span class="ne">ModuleNotFoundError</span>: No module named &#39;pandas&#39;
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="decision-tree-data-asli-tanpa-diskritisasi">
+<h3>Decision Tree – Data Asli (Tanpa Diskritisasi)<a class="headerlink" href="#decision-tree-data-asli-tanpa-diskritisasi" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.tree</span><span class="w"> </span><span class="kn">import</span> <span class="n">DecisionTreeClassifier</span>
+
+<span class="c1"># Load data tetap sama seperti sebelumnya</span>
+<span class="c1"># Split data juga sama</span>
+
+<span class="c1"># Model Decision Tree</span>
+<span class="n">model_dt</span> <span class="o">=</span> <span class="n">DecisionTreeClassifier</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">model_dt</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="n">y_pred_dt</span> <span class="o">=</span> <span class="n">model_dt</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+
+<span class="c1"># Akurasi</span>
+<span class="n">accuracy_dt</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred_dt</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Akurasi Decision Tree (data asli): </span><span class="si">{</span><span class="n">accuracy_dt</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Akurasi Decision Tree (data asli): 1.0000
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="data-iris-setelah-didikritisasi">
+<h2>Data iris setelah didikritisasi<a class="headerlink" href="#data-iris-setelah-didikritisasi" title="Link to this heading">#</a></h2>
+<section id="dikstritisasi-fitur-data-iris-menggunakan-k-means-clustering">
+<h3>Dikstritisasi fitur data iris menggunakan K-means Clustering<a class="headerlink" href="#dikstritisasi-fitur-data-iris-menggunakan-k-means-clustering" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Fitur sepal length (cm) → 4</p></li>
+<li><p>Fitur petal length (cm) → 4</p></li>
+<li><p>Fitur sepal width (cm) → 3</p></li>
+<li><p>Fitur petal width (cm) → 3</p></li>
+</ul>
+</section>
+<section id="diskritisasi-data-iris-menggunakan-kbinsdiscretizer-dengan-strategi-kmeans">
+<h3>Diskritisasi Data Iris Menggunakan KBinsDiscretizer dengan Strategi KMeans<a class="headerlink" href="#diskritisasi-data-iris-menggunakan-kbinsdiscretizer-dengan-strategi-kmeans" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_iris</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.preprocessing</span><span class="w"> </span><span class="kn">import</span> <span class="n">MinMaxScaler</span><span class="p">,</span> <span class="n">KBinsDiscretizer</span>
+
+<span class="c1"># 1. Load data Iris</span>
+<span class="n">iris</span> <span class="o">=</span> <span class="n">load_iris</span><span class="p">()</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">iris</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">iris</span><span class="o">.</span><span class="n">feature_names</span><span class="p">)</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;target&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">target</span>
+
+<span class="c1"># 2. Normalisasi fitur (opsional, bisa dilewati karena KBinsDiscretizer tidak butuh scaling)</span>
+<span class="n">scaler</span> <span class="o">=</span> <span class="n">MinMaxScaler</span><span class="p">()</span>
+<span class="n">df_scaled</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">scaler</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">iris</span><span class="o">.</span><span class="n">feature_names</span><span class="p">]),</span> <span class="n">columns</span><span class="o">=</span><span class="n">iris</span><span class="o">.</span><span class="n">feature_names</span><span class="p">)</span>
+
+<span class="c1"># 3. Inisialisasi KBinsDiscretizer</span>
+<span class="n">discretizer</span> <span class="o">=</span> <span class="n">KBinsDiscretizer</span><span class="p">(</span>
+    <span class="n">n_bins</span><span class="o">=</span><span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span>        <span class="c1"># Jumlah bin per fitur</span>
+    <span class="n">encode</span><span class="o">=</span><span class="s1">&#39;ordinal&#39;</span><span class="p">,</span>          <span class="c1"># Output berupa angka kategori: 0,1,2,...</span>
+    <span class="n">strategy</span><span class="o">=</span><span class="s1">&#39;kmeans&#39;</span>          <span class="c1"># Gunakan strategi kmeans seperti kode sebelumnya</span>
+<span class="p">)</span>
+
+<span class="c1"># 4. Fit dan transform data</span>
+<span class="n">X_disc</span> <span class="o">=</span> <span class="n">discretizer</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">df_scaled</span><span class="p">)</span>
+
+<span class="c1"># 5. Buat DataFrame hasil diskritisasi</span>
+<span class="n">df_disc</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">X_disc</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span>
+    <span class="s1">&#39;sepal length (cat)&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;sepal width (cat)&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;petal length (cat)&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;petal width (cat)&#39;</span>
+<span class="p">])</span>
+<span class="n">df_disc</span><span class="p">[</span><span class="s1">&#39;target&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;target&#39;</span><span class="p">]</span>
+
+<span class="c1"># 6. Tampilkan hasil</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df_disc</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+
+<span class="c1"># 7. Simpan ke Excel (opsional)</span>
+<span class="n">df_disc</span><span class="o">.</span><span class="n">to_excel</span><span class="p">(</span><span class="s2">&quot;iris_kbins_discretized.xlsx&quot;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>   sepal length (cat)  sepal width (cat)  petal length (cat)  \
+0                 0.0                2.0                 0.0   
+1                 0.0                1.0                 0.0   
+2                 0.0                1.0                 0.0   
+3                 0.0                1.0                 0.0   
+4                 0.0                2.0                 0.0   
+
+   petal width (cat)  target  
+0                0.0       0  
+1                0.0       0  
+2                0.0       0  
+3                0.0       0  
+4                0.0       0  
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="visualisasi-batas-bin">
+<h3>Visualisasi Batas Bin<a class="headerlink" href="#visualisasi-batas-bin" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="c1"># 5a. Visualisasi batas bin untuk setiap fitur</span>
+<span class="n">feature_names</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">feature_names</span>
+<span class="n">bin_edges</span> <span class="o">=</span> <span class="n">discretizer</span><span class="o">.</span><span class="n">bin_edges_</span>
+
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">feature</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">feature_names</span><span class="p">):</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">df_scaled</span><span class="p">[</span><span class="n">feature</span><span class="p">],</span> <span class="n">bins</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">edge</span> <span class="ow">in</span> <span class="n">bin_edges</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">edge</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">)</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Distribusi &amp; Batas Bin: </span><span class="si">{</span><span class="n">feature</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Nilai (terdiskalakan)&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Jumlah&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1"># 5b. Tampilkan informasi batas bin numerik</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">feature</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">feature_names</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Batas bin untuk fitur &#39;</span><span class="si">{</span><span class="n">feature</span><span class="si">}</span><span class="s2">&#39;: </span><span class="si">{</span><span class="n">bin_edges</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/6429dae901ac9efbc6aecf024b3b53c41d0cf05cdc54c23535c0c63d409410fb.png" src="_images/6429dae901ac9efbc6aecf024b3b53c41d0cf05cdc54c23535c0c63d409410fb.png" />
+<img alt="_images/777ca57004e2229231910b96536a0ab915994d25ffcf986b7b4402cff7a3ab45.png" src="_images/777ca57004e2229231910b96536a0ab915994d25ffcf986b7b4402cff7a3ab45.png" />
+<img alt="_images/8940e3130a7a726fe2eaac0fec6ed05e8ac0a2a3990e7af92d17fc81ca695e14.png" src="_images/8940e3130a7a726fe2eaac0fec6ed05e8ac0a2a3990e7af92d17fc81ca695e14.png" />
+<img alt="_images/02e933134732b4e0492a704b0e15089954b46361dad42178fc6ca05be08a5527.png" src="_images/02e933134732b4e0492a704b0e15089954b46361dad42178fc6ca05be08a5527.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Batas bin untuk fitur &#39;sepal length (cm)&#39;: [0.         0.28199251 0.50680272 0.74343712 1.        ]
+Batas bin untuk fitur &#39;sepal width (cm)&#39;: [0.         0.35507024 0.59817308 1.        ]
+Batas bin untuk fitur &#39;petal length (cm)&#39;: [0.         0.28355932 0.56719397 0.73832392 1.        ]
+Batas bin untuk fitur &#39;petal width (cm)&#39;: [0.         0.28522436 0.6627938  1.        ]
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="klasifikasi-naive-bayes-setelah-diskritisasi">
+<h2>Klasifikasi Naive Bayes setelah Diskritisasi<a class="headerlink" href="#klasifikasi-naive-bayes-setelah-diskritisasi" title="Link to this heading">#</a></h2>
+<section id="klasifikasi-data-iris-menggunakan-categorical-naive-bayes-dan-diskritisasi-dengan-kbinsdiscretizer">
+<h3>Klasifikasi Data Iris Menggunakan Categorical Naive Bayes dan Diskritisasi dengan KBinsDiscretizer<a class="headerlink" href="#klasifikasi-data-iris-menggunakan-categorical-naive-bayes-dan-diskritisasi-dengan-kbinsdiscretizer" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_iris</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.preprocessing</span><span class="w"> </span><span class="kn">import</span> <span class="n">MinMaxScaler</span><span class="p">,</span> <span class="n">KBinsDiscretizer</span><span class="p">,</span> <span class="n">OrdinalEncoder</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.naive_bayes</span><span class="w"> </span><span class="kn">import</span> <span class="n">CategoricalNB</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.model_selection</span><span class="w"> </span><span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">accuracy_score</span>
+
+<span class="c1"># 1. Load dataset</span>
+<span class="n">iris</span> <span class="o">=</span> <span class="n">load_iris</span><span class="p">()</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">iris</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">iris</span><span class="o">.</span><span class="n">feature_names</span><span class="p">)</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;target&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">target</span>
+
+<span class="c1"># 2. Normalisasi fitur (opsional tapi umum dilakukan sebelum diskritisasi)</span>
+<span class="n">scaler</span> <span class="o">=</span> <span class="n">MinMaxScaler</span><span class="p">()</span>
+<span class="n">df_scaled</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">scaler</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">iris</span><span class="o">.</span><span class="n">feature_names</span><span class="p">]),</span> <span class="n">columns</span><span class="o">=</span><span class="n">iris</span><span class="o">.</span><span class="n">feature_names</span><span class="p">)</span>
+
+<span class="c1"># 3. Diskritisasi menggunakan KBinsDiscretizer</span>
+<span class="n">discretizer</span> <span class="o">=</span> <span class="n">KBinsDiscretizer</span><span class="p">(</span><span class="n">n_bins</span><span class="o">=</span><span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="n">encode</span><span class="o">=</span><span class="s1">&#39;ordinal&#39;</span><span class="p">,</span> <span class="n">strategy</span><span class="o">=</span><span class="s1">&#39;kmeans&#39;</span><span class="p">)</span>  <span class="c1"># Bisa ganti ke &#39;uniform&#39; atau &#39;quantile&#39;</span>
+<span class="n">X_binned</span> <span class="o">=</span> <span class="n">discretizer</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">df_scaled</span><span class="p">)</span>
+
+<span class="c1"># 4. Buat DataFrame diskret dan gabungkan target</span>
+<span class="n">df_cat</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">X_binned</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span>
+    <span class="s1">&#39;sepal length (cat)&#39;</span><span class="p">,</span> <span class="s1">&#39;sepal width (cat)&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;petal length (cat)&#39;</span><span class="p">,</span> <span class="s1">&#39;petal width (cat)&#39;</span>
+<span class="p">])</span>
+<span class="n">df_cat</span><span class="p">[</span><span class="s1">&#39;target&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;target&#39;</span><span class="p">]</span>
+
+<span class="c1"># 5. Encoding kategori ordinal (hasil dari KBinsDiscretizer sudah berupa angka, tapi kita tetap lakukan ini untuk generalisasi)</span>
+<span class="n">encoder</span> <span class="o">=</span> <span class="n">OrdinalEncoder</span><span class="p">()</span>
+<span class="n">X_cat_encoded</span> <span class="o">=</span> <span class="n">encoder</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">df_cat</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;target&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">df_cat</span><span class="p">[</span><span class="s1">&#39;target&#39;</span><span class="p">]</span>
+
+<span class="c1"># 6. Split data</span>
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X_cat_encoded</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+
+<span class="c1"># 7. Categorical Naive Bayes</span>
+<span class="n">model_nb</span> <span class="o">=</span> <span class="n">CategoricalNB</span><span class="p">()</span>
+<span class="n">model_nb</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+
+<span class="c1"># 8. Evaluasi</span>
+<span class="n">y_pred</span> <span class="o">=</span> <span class="n">model_nb</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+<span class="n">accuracy</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+
+<span class="c1"># 9. Simpan prediksi ke DataFrame</span>
+<span class="n">df_cat</span> <span class="o">=</span> <span class="n">df_cat</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">df_cat</span><span class="p">[</span><span class="s1">&#39;target_predicted&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">model_nb</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_cat_encoded</span><span class="p">)</span>
+
+<span class="c1"># 10. Output</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;📊 Akurasi Naive Bayes dengan KBinsDiscretizer: </span><span class="si">{</span><span class="n">accuracy</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">100</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">%&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df_cat</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>📊 Akurasi Naive Bayes dengan KBinsDiscretizer: 100.00%
+   sepal length (cat)  sepal width (cat)  petal length (cat)  \
+0                 0.0                2.0                 0.0   
+1                 0.0                1.0                 0.0   
+2                 0.0                1.0                 0.0   
+3                 0.0                1.0                 0.0   
+4                 0.0                2.0                 0.0   
+5                 1.0                2.0                 0.0   
+6                 0.0                1.0                 0.0   
+7                 0.0                1.0                 0.0   
+8                 0.0                1.0                 0.0   
+9                 0.0                1.0                 0.0   
+
+   petal width (cat)  target  target_predicted  
+0                0.0       0                 0  
+1                0.0       0                 0  
+2                0.0       0                 0  
+3                0.0       0                 0  
+4                0.0       0                 0  
+5                0.0       0                 0  
+6                0.0       0                 0  
+7                0.0       0                 0  
+8                0.0       0                 0  
+9                0.0       0                 0  
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="klasifikasi-data-iris-menggunakan-decision-tree-dan-diskritisasi-kbinsdiscretizer-dengan-visualisasi-pohon-keputusan">
+<h3>Klasifikasi Data Iris Menggunakan Decision Tree dan Diskritisasi KBinsDiscretizer dengan Visualisasi Pohon Keputusan<a class="headerlink" href="#klasifikasi-data-iris-menggunakan-decision-tree-dan-diskritisasi-kbinsdiscretizer-dengan-visualisasi-pohon-keputusan" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_iris</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.preprocessing</span><span class="w"> </span><span class="kn">import</span> <span class="n">MinMaxScaler</span><span class="p">,</span> <span class="n">KBinsDiscretizer</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.tree</span><span class="w"> </span><span class="kn">import</span> <span class="n">DecisionTreeClassifier</span><span class="p">,</span> <span class="n">plot_tree</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.model_selection</span><span class="w"> </span><span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">accuracy_score</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+
+<span class="c1"># 1. Load dataset Iris</span>
+<span class="n">iris</span> <span class="o">=</span> <span class="n">load_iris</span><span class="p">()</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">iris</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">iris</span><span class="o">.</span><span class="n">feature_names</span><span class="p">)</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;target&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">target</span>
+
+<span class="c1"># 2. Normalisasi fitur numerik</span>
+<span class="n">scaler</span> <span class="o">=</span> <span class="n">MinMaxScaler</span><span class="p">()</span>
+<span class="n">df_scaled</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">scaler</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">iris</span><span class="o">.</span><span class="n">feature_names</span><span class="p">]),</span> <span class="n">columns</span><span class="o">=</span><span class="n">iris</span><span class="o">.</span><span class="n">feature_names</span><span class="p">)</span>
+
+<span class="c1"># 3. Diskritisasi fitur numerik menjadi kategorikal</span>
+<span class="n">discretizer</span> <span class="o">=</span> <span class="n">KBinsDiscretizer</span><span class="p">(</span><span class="n">n_bins</span><span class="o">=</span><span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="n">encode</span><span class="o">=</span><span class="s1">&#39;ordinal&#39;</span><span class="p">,</span> <span class="n">strategy</span><span class="o">=</span><span class="s1">&#39;kmeans&#39;</span><span class="p">)</span>
+<span class="n">X_binned</span> <span class="o">=</span> <span class="n">discretizer</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">df_scaled</span><span class="p">)</span>
+
+<span class="c1"># 4. Gabungkan ke DataFrame baru</span>
+<span class="n">feature_names_cat</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;sepal length (cat)&#39;</span><span class="p">,</span> <span class="s1">&#39;sepal width (cat)&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;petal length (cat)&#39;</span><span class="p">,</span> <span class="s1">&#39;petal width (cat)&#39;</span>
+<span class="p">]</span>
+<span class="n">df_cat</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">X_binned</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">feature_names_cat</span><span class="p">)</span>
+<span class="n">df_cat</span><span class="p">[</span><span class="s1">&#39;target&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;target&#39;</span><span class="p">]</span>
+
+<span class="c1"># 5. Gunakan data diskret langsung (tanpa OrdinalEncoder)</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">df_cat</span><span class="p">[</span><span class="n">feature_names_cat</span><span class="p">]</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">df_cat</span><span class="p">[</span><span class="s1">&#39;target&#39;</span><span class="p">]</span>
+
+<span class="c1"># 6. Split data untuk pelatihan dan pengujian</span>
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+
+<span class="c1"># 7. Latih model Decision Tree</span>
+<span class="n">model_dt</span> <span class="o">=</span> <span class="n">DecisionTreeClassifier</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">model_dt</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+
+<span class="c1"># 8. Prediksi &amp; evaluasi</span>
+<span class="n">y_pred</span> <span class="o">=</span> <span class="n">model_dt</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+<span class="n">accuracy</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;📊 Akurasi Decision Tree (kategori hasil KBinsDiscretizer): </span><span class="si">{</span><span class="n">accuracy</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># 9. Tambahkan prediksi ke DataFrame</span>
+<span class="n">df_cat</span> <span class="o">=</span> <span class="n">df_cat</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">df_cat</span><span class="p">[</span><span class="s1">&#39;target_predicted&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">model_dt</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df_cat</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>
+
+<span class="c1"># 10. Visualisasi pohon keputusan</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">plot_tree</span><span class="p">(</span>
+    <span class="n">model_dt</span><span class="p">,</span>
+    <span class="n">feature_names</span><span class="o">=</span><span class="n">feature_names_cat</span><span class="p">,</span>
+    <span class="n">class_names</span><span class="o">=</span><span class="n">iris</span><span class="o">.</span><span class="n">target_names</span><span class="p">,</span>
+    <span class="n">filled</span><span class="o">=</span><span class="kc">True</span>
+<span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Visualisasi Decision Tree (Diskret)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>📊 Akurasi Decision Tree (kategori hasil KBinsDiscretizer): 1.0000
+   sepal length (cat)  sepal width (cat)  petal length (cat)  \
+0                 0.0                2.0                 0.0   
+1                 0.0                1.0                 0.0   
+2                 0.0                1.0                 0.0   
+3                 0.0                1.0                 0.0   
+4                 0.0                2.0                 0.0   
+5                 1.0                2.0                 0.0   
+6                 0.0                1.0                 0.0   
+7                 0.0                1.0                 0.0   
+8                 0.0                1.0                 0.0   
+9                 0.0                1.0                 0.0   
+
+   petal width (cat)  target  target_predicted  
+0                0.0       0                 0  
+1                0.0       0                 0  
+2                0.0       0                 0  
+3                0.0       0                 0  
+4                0.0       0                 0  
+5                0.0       0                 0  
+6                0.0       0                 0  
+7                0.0       0                 0  
+8                0.0       0                 0  
+9                0.0       0                 0  
+</pre></div>
+</div>
+<img alt="_images/493f417208ca86b8ba11cf2d4f61cd61ccbb116de8e60d6f7da5033eb1d85171.png" src="_images/493f417208ca86b8ba11cf2d4f61cd61ccbb116de8e60d6f7da5033eb1d85171.png" />
+</div>
+</div>
+</section>
+</section>
+<section id="evaluasi-metode">
+<h2>Evaluasi metode<a class="headerlink" href="#evaluasi-metode" title="Link to this heading">#</a></h2>
+<section id="perbandingan-akurasi-naive-bayes-dan-decision-tree-pada-data-iris-data-numerik-vs-data-diskritisasi-kbinsdiscretizer">
+<h3>Perbandingan Akurasi Naive Bayes dan Decision Tree pada Data Iris: Data Numerik vs Data Diskritisasi (KBinsDiscretizer)<a class="headerlink" href="#perbandingan-akurasi-naive-bayes-dan-decision-tree-pada-data-iris-data-numerik-vs-data-diskritisasi-kbinsdiscretizer" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_iris</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.model_selection</span><span class="w"> </span><span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.preprocessing</span><span class="w"> </span><span class="kn">import</span> <span class="n">MinMaxScaler</span><span class="p">,</span> <span class="n">KBinsDiscretizer</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.naive_bayes</span><span class="w"> </span><span class="kn">import</span> <span class="n">GaussianNB</span><span class="p">,</span> <span class="n">CategoricalNB</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.tree</span><span class="w"> </span><span class="kn">import</span> <span class="n">DecisionTreeClassifier</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">accuracy_score</span><span class="p">,</span> <span class="n">classification_report</span>
+
+<span class="c1"># Load data Iris</span>
+<span class="n">iris</span> <span class="o">=</span> <span class="n">load_iris</span><span class="p">()</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">iris</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">iris</span><span class="o">.</span><span class="n">feature_names</span><span class="p">)</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;target&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">target</span>
+
+<span class="c1"># --- Data Numerik (Kontinu) ---</span>
+<span class="n">X_num</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">iris</span><span class="o">.</span><span class="n">feature_names</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;target&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+
+<span class="c1"># Split data numerik</span>
+<span class="n">X_train_num</span><span class="p">,</span> <span class="n">X_test_num</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X_num</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span> <span class="n">stratify</span><span class="o">=</span><span class="n">y</span><span class="p">)</span>
+
+<span class="c1"># --- Data Diskret ---</span>
+<span class="c1"># Normalisasi sebelum diskretisasi</span>
+<span class="n">scaler</span> <span class="o">=</span> <span class="n">MinMaxScaler</span><span class="p">()</span>
+<span class="n">X_scaled</span> <span class="o">=</span> <span class="n">scaler</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X_num</span><span class="p">)</span>
+
+<span class="c1"># Diskretisasi (pakai strategi kmeans)</span>
+<span class="n">kbd</span> <span class="o">=</span> <span class="n">KBinsDiscretizer</span><span class="p">(</span><span class="n">n_bins</span><span class="o">=</span><span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="n">encode</span><span class="o">=</span><span class="s1">&#39;ordinal&#39;</span><span class="p">,</span> <span class="n">strategy</span><span class="o">=</span><span class="s1">&#39;kmeans&#39;</span><span class="p">)</span>
+<span class="n">X_binned</span> <span class="o">=</span> <span class="n">kbd</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X_scaled</span><span class="p">)</span>
+
+<span class="c1"># Split data diskret</span>
+<span class="n">X_train_disc</span><span class="p">,</span> <span class="n">X_test_disc</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X_binned</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span> <span class="n">stratify</span><span class="o">=</span><span class="n">y</span><span class="p">)</span>
+
+<span class="c1"># --- Modeling ---</span>
+
+<span class="c1"># 1. GaussianNB (kontinu)</span>
+<span class="n">model_gnb</span> <span class="o">=</span> <span class="n">GaussianNB</span><span class="p">()</span>
+<span class="n">model_gnb</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train_num</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="n">y_pred_gnb</span> <span class="o">=</span> <span class="n">model_gnb</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test_num</span><span class="p">)</span>
+<span class="n">acc_gnb</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred_gnb</span><span class="p">)</span>
+
+<span class="c1"># 2. Decision Tree (kontinu)</span>
+<span class="n">model_dt_num</span> <span class="o">=</span> <span class="n">DecisionTreeClassifier</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">model_dt_num</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train_num</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="n">y_pred_dt_num</span> <span class="o">=</span> <span class="n">model_dt_num</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test_num</span><span class="p">)</span>
+<span class="n">acc_dt_num</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred_dt_num</span><span class="p">)</span>
+
+<span class="c1"># 3. CategoricalNB (diskret)</span>
+<span class="n">model_cnb</span> <span class="o">=</span> <span class="n">CategoricalNB</span><span class="p">()</span>
+<span class="n">model_cnb</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train_disc</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="n">y_pred_cnb</span> <span class="o">=</span> <span class="n">model_cnb</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test_disc</span><span class="p">)</span>
+<span class="n">acc_cnb</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred_cnb</span><span class="p">)</span>
+
+<span class="c1"># 4. Decision Tree (diskret)</span>
+<span class="n">model_dt_disc</span> <span class="o">=</span> <span class="n">DecisionTreeClassifier</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">model_dt_disc</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train_disc</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="n">y_pred_dt_disc</span> <span class="o">=</span> <span class="n">model_dt_disc</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test_disc</span><span class="p">)</span>
+<span class="n">acc_dt_disc</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred_dt_disc</span><span class="p">)</span>
+
+<span class="c1"># --- Output ---</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;📊 Akurasi Model:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;1. GaussianNB (kontinu):         </span><span class="si">{</span><span class="n">acc_gnb</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;2. Decision Tree (kontinu):      </span><span class="si">{</span><span class="n">acc_dt_num</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;3. CategoricalNB (diskret):      </span><span class="si">{</span><span class="n">acc_cnb</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;4. Decision Tree (diskret):      </span><span class="si">{</span><span class="n">acc_dt_disc</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Optional: classification report untuk salah satu model</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">📄 Classification Report (Decision Tree Diskret):&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">classification_report</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred_dt_disc</span><span class="p">,</span> <span class="n">target_names</span><span class="o">=</span><span class="n">iris</span><span class="o">.</span><span class="n">target_names</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>📊 Akurasi Model:
+1. GaussianNB (kontinu):         0.9111
+2. Decision Tree (kontinu):      0.9333
+3. CategoricalNB (diskret):      0.9333
+4. Decision Tree (diskret):      0.9111
+
+📄 Classification Report (Decision Tree Diskret):
+              precision    recall  f1-score   support
+
+      setosa       1.00      1.00      1.00        15
+  versicolor       0.82      0.93      0.88        15
+   virginica       0.92      0.80      0.86        15
+
+    accuracy                           0.91        45
+   macro avg       0.92      0.91      0.91        45
+weighted avg       0.92      0.91      0.91        45
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="akurasi-model">
+<h2>📊 <strong>Akurasi Model:</strong><a class="headerlink" href="#akurasi-model" title="Link to this heading">#</a></h2>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Model</p></th>
+<th class="head"><p>Akurasi</p></th>
+<th class="head"><p>Penjelasan</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>1. GaussianNB (kontinu)</strong></p></td>
+<td><p>0.9111</p></td>
+<td><p>Model Naive Bayes berbasis distribusi normal pada data kontinu.</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>2. Decision Tree (kontinu)</strong></p></td>
+<td><p>0.9333</p></td>
+<td><p>Pohon keputusan yang dilatih dari fitur numerik kontinu.</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>3. CategoricalNB (diskret)</strong></p></td>
+<td><p>0.9333</p></td>
+<td><p>Naive Bayes khusus data kategorikal (diskret hasil <em>binning</em>).</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>4. Decision Tree (diskret)</strong></p></td>
+<td><p>0.9111</p></td>
+<td><p>Pohon keputusan yang dilatih dari fitur kategorikal hasil diskretisasi.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<blockquote>
+<div><p>🔍 <strong>Kesimpulan</strong>:</p>
+</div></blockquote>
+<ul class="simple">
+<li><p>Model paling akurat: <strong>Decision Tree (kontinu)</strong> dan <strong>CategoricalNB (diskret)</strong>, dengan <strong>akurasi 93.33%</strong>.</p></li>
+<li><p>Semua model menunjukkan performa tinggi (&gt;90%), tapi hasilnya sedikit bervariasi tergantung tipe data dan model.</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="classification-report-decision-tree-diskret">
+<h2>📄 <strong>Classification Report (Decision Tree Diskret):</strong><a class="headerlink" href="#classification-report-decision-tree-diskret" title="Link to this heading">#</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>              <span class="n">precision</span>    <span class="n">recall</span>  <span class="n">f1</span><span class="o">-</span><span class="n">score</span>   <span class="n">support</span>
+
+      <span class="n">setosa</span>       <span class="mf">1.00</span>      <span class="mf">1.00</span>      <span class="mf">1.00</span>        <span class="mi">15</span>
+  <span class="n">versicolor</span>       <span class="mf">0.82</span>      <span class="mf">0.93</span>      <span class="mf">0.88</span>        <span class="mi">15</span>
+   <span class="n">virginica</span>       <span class="mf">0.92</span>      <span class="mf">0.80</span>      <span class="mf">0.86</span>        <span class="mi">15</span>
+
+    <span class="n">accuracy</span>                           <span class="mf">0.91</span>        <span class="mi">45</span>
+   <span class="n">macro</span> <span class="n">avg</span>       <span class="mf">0.92</span>      <span class="mf">0.91</span>      <span class="mf">0.91</span>        <span class="mi">45</span>
+<span class="n">weighted</span> <span class="n">avg</span>       <span class="mf">0.92</span>      <span class="mf">0.91</span>      <span class="mf">0.91</span>        <span class="mi">45</span>
+</pre></div>
+</div>
+<section id="arti-dari-metrik-metrik-tersebut">
+<h3>Arti dari metrik-metrik tersebut:<a class="headerlink" href="#arti-dari-metrik-metrik-tersebut" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Metrik</p></th>
+<th class="head"><p>Arti</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>Precision</strong></p></td>
+<td><p>Dari semua prediksi kelas X, berapa yang benar.</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Recall</strong></p></td>
+<td><p>Dari semua data asli kelas X, berapa yang berhasil dikenali.</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>F1-score</strong></p></td>
+<td><p>Rata-rata harmonik dari precision dan recall (semakin tinggi = semakin seimbang &amp; baik).</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Support</strong></p></td>
+<td><p>Jumlah data aktual untuk kelas tersebut.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<hr class="docutils" />
+<section id="penafsiran-per-kelas">
+<h3>📌 Penafsiran per kelas:<a class="headerlink" href="#penafsiran-per-kelas" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Setosa</strong>:</p>
+<ul>
+<li><p>Precision, Recall, dan F1 = 1.00 → <strong>sempurna</strong>. Semua prediksi benar.</p></li>
+</ul>
+</li>
+<li><p><strong>Versicolor</strong>:</p>
+<ul>
+<li><p>Recall = 0.93 → sebagian besar berhasil dikenali.</p></li>
+<li><p>Precision = 0.82 → ada beberapa kesalahan klasifikasi ke versicolor.</p></li>
+</ul>
+</li>
+<li><p><strong>Virginica</strong>:</p>
+<ul>
+<li><p>Precision tinggi (0.92), tapi recall hanya 0.80 → model <strong>kurang mengenali semua virginica</strong>.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="kesimpulan-umum">
+<h3>🧠 Kesimpulan Umum:<a class="headerlink" href="#kesimpulan-umum" title="Link to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p><strong>Decision Tree pada data diskret</strong> masih memberikan akurasi tinggi (91.11%), tapi sedikit di bawah versi kontinu (93.33%).</p></li>
+<li><p><strong>Model bekerja sangat baik pada kelas setosa</strong>, tapi sedikit kesulitan membedakan antara versicolor dan virginica (yang secara morfologi memang lebih mirip).</p></li>
+<li><p>Akurasi tinggi menunjukkan bahwa <strong>diskretisasi dengan KBinsDiscretizer efektif</strong>, terutama jika ingin menggunakan model seperti <code class="docutils literal notranslate"><span class="pre">CategoricalNB</span></code>.</p></li>
+</ol>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="clustering.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title"><strong>Clustering</strong></p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#konsep-dikritisasi">Konsep Dikritisasi</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pengertian-dikstritisasi">Pengertian Dikstritisasi</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tujuan-diskritisasi">Tujuan Diskritisasi</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#metode-dikritisasi">Metode Dikritisasi</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-iris-sebelum-didikritisasi">Data iris sebelum didikritisasi</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#naive-bayes-data-asli-tanpa-diskritisasi">Naive Bayes – Data Asli (Tanpa Diskritisasi)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#decision-tree-data-asli-tanpa-diskritisasi">Decision Tree – Data Asli (Tanpa Diskritisasi)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-iris-setelah-didikritisasi">Data iris setelah didikritisasi</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dikstritisasi-fitur-data-iris-menggunakan-k-means-clustering">Dikstritisasi fitur data iris menggunakan K-means Clustering</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#diskritisasi-data-iris-menggunakan-kbinsdiscretizer-dengan-strategi-kmeans">Diskritisasi Data Iris Menggunakan KBinsDiscretizer dengan Strategi KMeans</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#visualisasi-batas-bin">Visualisasi Batas Bin</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#klasifikasi-naive-bayes-setelah-diskritisasi">Klasifikasi Naive Bayes setelah Diskritisasi</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#klasifikasi-data-iris-menggunakan-categorical-naive-bayes-dan-diskritisasi-dengan-kbinsdiscretizer">Klasifikasi Data Iris Menggunakan Categorical Naive Bayes dan Diskritisasi dengan KBinsDiscretizer</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#klasifikasi-data-iris-menggunakan-decision-tree-dan-diskritisasi-kbinsdiscretizer-dengan-visualisasi-pohon-keputusan">Klasifikasi Data Iris Menggunakan Decision Tree dan Diskritisasi KBinsDiscretizer dengan Visualisasi Pohon Keputusan</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluasi-metode">Evaluasi metode</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#perbandingan-akurasi-naive-bayes-dan-decision-tree-pada-data-iris-data-numerik-vs-data-diskritisasi-kbinsdiscretizer">Perbandingan Akurasi Naive Bayes dan Decision Tree pada Data Iris: Data Numerik vs Data Diskritisasi (KBinsDiscretizer)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#akurasi-model">📊 <strong>Akurasi Model:</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#classification-report-decision-tree-diskret">📄 <strong>Classification Report (Decision Tree Diskret):</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#arti-dari-metrik-metrik-tersebut">Arti dari metrik-metrik tersebut:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#penafsiran-per-kelas">📌 Penafsiran per kelas:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#kesimpulan-umum">🧠 Kesimpulan Umum:</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Shovya Lily Lau
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

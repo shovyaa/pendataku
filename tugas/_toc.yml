@@ -12,3 +12,5 @@ chapters:
   title: Project Uts
 - file: clustering
   title: Clustering
+- file: KBinsDiscretizer
+  title: KBinsDiscretizer
