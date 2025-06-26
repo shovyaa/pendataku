@@ -1,0 +1,2216 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Implementasi KNN, Naive Bayes, dan Decision Tree untuk Klasifikasi Risiko Kesehatan Ibu Hamil &#8212; My sample book</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Uas_Pendat';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Klasifikasi Gagal Jantung Menggunakan Algoritma SVM, Naive Bayes, dan Decition Tree" href="Pra_Uas.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo.png" class="logo__image only-light" alt="My sample book - Home"/>
+    <script>document.write(`<img src="_static/logo.png" class="logo__image only-dark" alt="My sample book - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Intro Data Mining
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="data.html"><strong>Data Undertanding</strong></a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="uts.html"><strong>Project UTS</strong></a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="clustering.html"><strong>Clustering</strong></a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="KBinsDiscretizer.html">KBinsDiscretizer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Pra_Uas.html">Klasifikasi Gagal Jantung Menggunakan Algoritma SVM, Naive Bayes, dan Decition Tree</a></li>
+
+
+
+
+
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Implementasi KNN, Naive Bayes, dan Decision Tree untuk Klasifikasi Risiko Kesehatan Ibu Hamil</a></li>
+
+
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2FUas_Pendat.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/Uas_Pendat.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Implementasi KNN, Naive Bayes, dan Decision Tree untuk Klasifikasi Risiko Kesehatan Ibu Hamil</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Implementasi KNN, Naive Bayes, dan Decision Tree untuk Klasifikasi Risiko Kesehatan Ibu Hamil</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pendahuluan">Pendahuluan</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#aplikasi-prediksi-risiko-kesehatan-ibu">Aplikasi Prediksi Risiko Kesehatan Ibu</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-undertanding">1. data Undertanding</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#struktur-data">struktur data</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#eksplorasi-data">Eksplorasi Data</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#statistik-deskriptif">statistik deskriptif</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#distribusi-variabel">distribusi variabel</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#distribusi-fitur">distribusi fitur</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kualitas-data">Kualitas data</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cek-missing-value">cek missing value</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pemeriksaan-outlier">pemeriksaan outlier</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#deteksi-outlier-menggunakan-metode-iqr">Deteksi Outlier Menggunakan Metode IQR</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#metode-iqr-interquartile-range">Metode IQR (Interquartile Range)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#hasil-deteksi-outlier-per-kolom">Hasil Deteksi Outlier per Kolom</a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#age-usia">1. <strong>Age (Usia)</strong></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#systolicbp-tekanan-darah-sistolik">2. <strong>SystolicBP (Tekanan Darah Sistolik)</strong></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#diastolicbp-tekanan-darah-diastolik">3. <strong>DiastolicBP (Tekanan Darah Diastolik)</strong></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#bs-blood-sugar-gula-darah">4. <strong>BS (Blood Sugar / Gula Darah)</strong></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#bodytemp-suhu-tubuh">5. <strong>BodyTemp (Suhu Tubuh)</strong></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#heartrate-denyut-jantung">6. <strong>HeartRate (Denyut Jantung)</strong></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ringkasan-outlier">Ringkasan Outlier</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#kesimpulan">Kesimpulan</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hubungan-antar-fitur">hubungan antar fitur</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pre-processing">2. Pre-Processing</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#penanganan-outlier">penanganan outlier</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pemrosesan-fitur-kategorical">pemrosesan fitur kategorical</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pemisahan-fitur-dan-target">pemisahan fitur dan target</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pembagian-data-training-dan-testing-set">Pembagian Data: Training dan Testing Set</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#normalisasi">Normalisasi</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#penanganan-imbalance-data">penanganan imbalance data</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#modelling-dan-evaluasi">Modelling dan evaluasi</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#knn">KNN</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#naive-bayes">Naive bayes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#decition-tree">decition tree</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Kesimpulan</a></li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="implementasi-knn-naive-bayes-dan-decision-tree-untuk-klasifikasi-risiko-kesehatan-ibu-hamil">
+<h1>Implementasi KNN, Naive Bayes, dan Decision Tree untuk Klasifikasi Risiko Kesehatan Ibu Hamil<a class="headerlink" href="#implementasi-knn-naive-bayes-dan-decision-tree-untuk-klasifikasi-risiko-kesehatan-ibu-hamil" title="Link to this heading">#</a></h1>
+<section id="pendahuluan">
+<h2>Pendahuluan<a class="headerlink" href="#pendahuluan" title="Link to this heading">#</a></h2>
+<p>Kesehatan ibu selama masa kehamilan merupakan aspek vital dalam dunia medis, terutama karena kondisi ini sangat menentukan keselamatan dan kesejahteraan ibu dan janin. Risiko kesehatan pada ibu hamil, seperti tekanan darah tinggi (hipertensi), kadar gula darah tidak normal (diabetes gestasional), suhu tubuh yang tidak stabil, hingga detak jantung yang terlalu cepat atau lambat, dapat menyebabkan komplikasi serius baik selama kehamilan maupun saat proses persalinan. Oleh karena itu, deteksi dini terhadap risiko-risiko tersebut menjadi sangat penting untuk mencegah terjadinya kondisi darurat medis yang membahayakan.</p>
+<p>Seiring berkembangnya teknologi, pendekatan berbasis data mulai banyak digunakan dalam dunia medis untuk membantu proses diagnosis dan pengambilan keputusan. Salah satunya adalah dengan memanfaatkan algoritma <em>machine learning</em> untuk melakukan klasifikasi risiko berdasarkan data medis yang dimiliki pasien. Dengan pendekatan ini, tenaga medis dapat memperoleh gambaran lebih cepat dan akurat mengenai kondisi pasien, serta dapat mengambil langkah preventif maupun kuratif dengan lebih tepat.</p>
+<p>Dalam proyek ini, digunakan <strong>Maternal Health Risk Dataset</strong>, yaitu kumpulan data yang berisi berbagai fitur atau atribut penting yang berkaitan dengan kondisi kesehatan ibu hamil. Atribut-atribut tersebut antara lain tekanan darah sistolik dan diastolik, kadar gula darah, suhu tubuh, dan detak jantung. Setiap data di dalam dataset telah diklasifikasikan ke dalam tiga kategori tingkat risiko, yaitu <strong>Low Risk</strong>, <strong>Mid Risk</strong>, dan <strong>High Risk</strong>, yang merepresentasikan tingkat bahaya terhadap kondisi kesehatan ibu.</p>
+<p>Untuk melakukan klasifikasi pada dataset tersebut, akan digunakan tiga algoritma <em>supervised learning</em> yang populer, yaitu:</p>
+<ol class="arabic simple">
+<li><p><strong>K-Nearest Neighbors (KNN)</strong> – algoritma berbasis kedekatan jarak antar data.</p></li>
+<li><p><strong>Naive Bayes</strong> – algoritma probabilistik yang bekerja berdasarkan Teorema Bayes dengan asumsi independensi antar fitur.</p></li>
+<li><p><strong>Decision Tree</strong> – algoritma berbasis struktur pohon keputusan yang sederhana dan mudah diinterpretasikan.</p></li>
+</ol>
+<p>Setiap algoritma akan diuji performanya melalui serangkaian tahapan, mulai dari proses <em>preprocessing</em> data, pelatihan model, evaluasi menggunakan metrik seperti akurasi, presisi, recall, dan F1-score, hingga analisis perbandingan hasil antar algoritma.</p>
+<p>Tujuan dari notebook ini adalah untuk mengevaluasi efektivitas ketiga algoritma dalam mengklasifikasikan tingkat risiko kesehatan ibu hamil berdasarkan data numerik yang tersedia, serta memberikan wawasan mengenai bagaimana pendekatan berbasis machine learning dapat diterapkan secara nyata dalam dunia kesehatan, khususnya dalam konteks pelayanan kesehatan ibu dan anak.</p>
+<section id="aplikasi-prediksi-risiko-kesehatan-ibu">
+<h3>Aplikasi Prediksi Risiko Kesehatan Ibu<a class="headerlink" href="#aplikasi-prediksi-risiko-kesehatan-ibu" title="Link to this heading">#</a></h3>
+<p>Anda dapat mencoba aplikasi web interaktif ini secara langsung melalui link berikut:</p>
+<p><a class="reference external" href="https://uas-pendata-dzxatiwvafyr56ldzwfd88.streamlit.app/">Akses Aplikasi Streamlit di Sini</a></p>
+<hr class="docutils" />
+<p><em>Catatan:</em> Kode sumber lengkap untuk aplikasi ini dapat ditemukan di repositori GitHub saya:
+<a class="reference external" href="https://github.com/shovyaa/uas-pendata.git">Repositori GitHub Proyek</a></p>
+</section>
+</section>
+<section id="data-undertanding">
+<h2>1. data Undertanding<a class="headerlink" href="#data-undertanding" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sns</span>
+
+<span class="c1"># Muat dataset</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;Maternal Health Risk Data Set.csv&#39;</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">FileNotFoundError</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error: &#39;Maternal Health Risk Data Set.csv&#39; not found. Please make sure the file is in the correct directory.&quot;</span><span class="p">)</span>
+    <span class="n">exit</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;--- 1. Tinjauan Awal Data ---&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;5 baris pertama:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">5 baris terakhir:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">tail</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Error: &#39;Maternal Health Risk Data Set.csv&#39; not found. Please make sure the file is in the correct directory.
+--- 1. Tinjauan Awal Data ---
+5 baris pertama:
+</pre></div>
+</div>
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">line</span> <span class="mi">14</span>
+<span class="g g-Whitespace">     </span><span class="mi">12</span> <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;--- 1. Tinjauan Awal Data ---&quot;</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">13</span> <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;5 baris pertama:&quot;</span><span class="p">)</span>
+<span class="ne">---&gt; </span><span class="mi">14</span> <span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+<span class="g g-Whitespace">     </span><span class="mi">15</span> <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">5 baris terakhir:&quot;</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">16</span> <span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">tail</span><span class="p">())</span>
+
+<span class="ne">NameError</span>: name &#39;df&#39; is not defined
+</pre></div>
+</div>
+</div>
+</div>
+<section id="struktur-data">
+<h3>struktur data<a class="headerlink" href="#struktur-data" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">--- 2. Dimensi Data ---&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Jumlah baris: </span><span class="si">{</span><span class="n">df</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Jumlah kolom: </span><span class="si">{</span><span class="n">df</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>--- 2. Dimensi Data ---
+Jumlah baris: 1014
+Jumlah kolom: 7
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Informasi umum dataframe:&quot;</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Informasi umum dataframe:
+&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
+RangeIndex: 1014 entries, 0 to 1013
+Data columns (total 7 columns):
+ #   Column       Non-Null Count  Dtype  
+---  ------       --------------  -----  
+ 0   Age          1014 non-null   int64  
+ 1   SystolicBP   1014 non-null   int64  
+ 2   DiastolicBP  1014 non-null   int64  
+ 3   BS           1014 non-null   float64
+ 4   BodyTemp     1014 non-null   float64
+ 5   HeartRate    1014 non-null   int64  
+ 6   RiskLevel    1014 non-null   object 
+dtypes: float64(2), int64(4), object(1)
+memory usage: 55.6+ KB
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Penjelasan Fitur pada Dataset</strong></p>
+<p>Dataset ini terdiri dari 7 fitur yang masing-masing merepresentasikan informasi medis terkait ibu hamil. Berikut adalah penjelasan dari masing-masing kolom:</p>
+<ol class="arabic simple">
+<li><p><strong>Age</strong></p>
+<ul class="simple">
+<li><p>Usia pasien dalam satuan tahun.</p></li>
+<li><p>Umumnya, usia sangat mempengaruhi risiko kehamilan, terutama jika terlalu muda (&lt; 18 tahun) atau terlalu tua (&gt; 35 tahun).</p></li>
+</ul>
+</li>
+<li><p><strong>SystolicBP (Systolic Blood Pressure)</strong></p>
+<ul class="simple">
+<li><p>Tekanan darah sistolik, yaitu tekanan darah saat jantung berkontraksi, dalam satuan mmHg.</p></li>
+<li><p>Nilai normal biasanya sekitar 90–120 mmHg. Nilai tinggi dapat mengindikasikan hipertensi.</p></li>
+</ul>
+</li>
+<li><p><strong>DiastolicBP (Diastolic Blood Pressure)</strong></p>
+<ul class="simple">
+<li><p>Tekanan darah diastolik, yaitu tekanan saat jantung beristirahat antara dua detakan, dalam satuan mmHg.</p></li>
+<li><p>Nilai normal berkisar antara 60–80 mmHg. Nilai yang terlalu tinggi atau rendah dapat menjadi indikator masalah kesehatan.</p></li>
+</ul>
+</li>
+<li><p><strong>BS (Blood Sugar)</strong></p>
+<ul class="simple">
+<li><p>Kadar gula darah pasien (dalam mmol/L atau satuan sejenis tergantung sumber data).</p></li>
+<li><p>Nilai tinggi menunjukkan potensi diabetes gestasional, sedangkan nilai terlalu rendah juga berbahaya.</p></li>
+</ul>
+</li>
+<li><p><strong>BodyTemp (Body Temperature)</strong></p>
+<ul class="simple">
+<li><p>Suhu tubuh pasien dalam derajat Celsius.</p></li>
+<li><p>Suhu normal tubuh berkisar antara 36.5°C hingga 37.5°C. Suhu yang abnormal bisa menjadi indikator infeksi atau kondisi medis lainnya.</p></li>
+</ul>
+</li>
+<li><p><strong>HeartRate</strong></p>
+<ul class="simple">
+<li><p>Denyut jantung pasien dalam satuan detak per menit (bpm).</p></li>
+<li><p>Detak jantung normal orang dewasa berkisar antara 60–100 bpm. Perubahan signifikan dapat menunjukkan stres fisik atau masalah jantung.</p></li>
+</ul>
+</li>
+<li><p><strong>RiskLevel</strong></p>
+<ul class="simple">
+<li><p>Label klasifikasi tingkat risiko kesehatan ibu hamil, dengan nilai kategori:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">Low</span> <span class="pre">Risk</span></code>  → Risiko rendah</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Mid</span> <span class="pre">Risk</span></code>  → Risiko sedang</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">High</span> <span class="pre">Risk</span></code> → Risiko tinggi</p></li>
+</ul>
+</li>
+<li><p>Kolom ini menjadi target (<em>label</em>) yang akan diprediksi oleh model klasifikasi.</p></li>
+</ul>
+</li>
+</ol>
+<p>Fitur-fitur ini secara klinis sangat relevan dalam menilai kondisi kesehatan ibu hamil, dan menjadi dasar dalam proses prediksi menggunakan algoritma machine learning.</p>
+</section>
+</section>
+<section id="eksplorasi-data">
+<h2>Eksplorasi Data<a class="headerlink" href="#eksplorasi-data" title="Link to this heading">#</a></h2>
+<section id="statistik-deskriptif">
+<h3>statistik deskriptif<a class="headerlink" href="#statistik-deskriptif" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">--- Statistik Deskriptif ---&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">describe</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>--- Statistik Deskriptif ---
+               Age   SystolicBP  DiastolicBP           BS     BodyTemp  \
+count  1014.000000  1014.000000  1014.000000  1014.000000  1014.000000   
+mean     29.871795   113.198225    76.460552     8.725986    98.665089   
+std      13.474386    18.403913    13.885796     3.293532     1.371384   
+min      10.000000    70.000000    49.000000     6.000000    98.000000   
+25%      19.000000   100.000000    65.000000     6.900000    98.000000   
+50%      26.000000   120.000000    80.000000     7.500000    98.000000   
+75%      39.000000   120.000000    90.000000     8.000000    98.000000   
+max      70.000000   160.000000   100.000000    19.000000   103.000000   
+
+         HeartRate  
+count  1014.000000  
+mean     74.301775  
+std       8.088702  
+min       7.000000  
+25%      70.000000  
+50%      76.000000  
+75%      80.000000  
+max      90.000000  
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Statistik Deskriptif Dataset</strong></p>
+<p>Statistik deskriptif memberikan gambaran umum tentang distribusi dan sebaran nilai dari setiap fitur numerik dalam dataset. Berikut adalah interpretasi dari hasil statistik:</p>
+<ol class="arabic simple">
+<li><p><strong>Age (Usia)</strong></p></li>
+</ol>
+<ul class="simple">
+<li><p><strong>Rata-rata (mean)</strong>: 29.87 tahun</p></li>
+<li><p><strong>Usia termuda (min)</strong>: 10 tahun</p></li>
+<li><p><strong>Usia tertua (max)</strong>: 70 tahun</p></li>
+<li><p><strong>Kuartil 1 (25%)</strong>: 19 tahun, <strong>Median (50%)</strong>: 26 tahun, <strong>Kuartil 3 (75%)</strong>: 39 tahun</p></li>
+</ul>
+<blockquote>
+<div><p>Artinya sebagian besar ibu hamil berada di rentang usia produktif 19–39 tahun.</p>
+</div></blockquote>
+<hr class="docutils" />
+<ol class="arabic simple" start="2">
+<li><p><strong>SystolicBP (Tekanan Darah Sistolik)</strong></p></li>
+</ol>
+<ul class="simple">
+<li><p><strong>Rata-rata</strong>: 113.20 mmHg</p></li>
+<li><p><strong>Minimum</strong>: 70 mmHg, <strong>Maksimum</strong>: 160 mmHg</p></li>
+<li><p><strong>Median</strong>: 120 mmHg</p></li>
+</ul>
+<blockquote>
+<div><p>Terdapat variasi yang cukup besar. Beberapa pasien memiliki tekanan darah sangat tinggi, menunjukkan potensi hipertensi.</p>
+</div></blockquote>
+<hr class="docutils" />
+<ol class="arabic simple" start="3">
+<li><p><strong>DiastolicBP (Tekanan Darah Diastolik)</strong></p></li>
+</ol>
+<ul class="simple">
+<li><p><strong>Rata-rata</strong>: 76.46 mmHg</p></li>
+<li><p><strong>Minimum</strong>: 49 mmHg, <strong>Maksimum</strong>: 100 mmHg</p></li>
+</ul>
+<blockquote>
+<div><p>Median berada di 80 mmHg, menunjukkan nilai yang mendekati normal, meskipun ada yang cukup rendah maupun tinggi.</p>
+</div></blockquote>
+<hr class="docutils" />
+<ol class="arabic simple" start="4">
+<li><p><strong>BS (Blood Sugar / Gula Darah)</strong></p></li>
+</ol>
+<ul class="simple">
+<li><p><strong>Rata-rata</strong>: 8.73</p></li>
+<li><p><strong>Minimum</strong>: 6.0, <strong>Maksimum</strong>: 19.0</p></li>
+<li><p><strong>Standar deviasi</strong>: 3.29</p></li>
+</ul>
+<blockquote>
+<div><p>Rata-rata gula darah cenderung tinggi. Nilai maksimal 19 menunjukkan kemungkinan adanya pasien dengan diabetes gestasional.</p>
+</div></blockquote>
+<hr class="docutils" />
+<ol class="arabic simple" start="5">
+<li><p><strong>BodyTemp (Suhu Tubuh)</strong></p></li>
+</ol>
+<ul class="simple">
+<li><p><strong>Rata-rata</strong>: 98.67°F</p></li>
+<li><p><strong>Rentang suhu</strong>: 98.0°F – 103.0°F</p></li>
+</ul>
+<blockquote>
+<div><p>Sebagian besar pasien memiliki suhu tubuh normal. Nilai maksimum 103°F menunjukkan adanya pasien dengan demam tinggi.</p>
+</div></blockquote>
+<hr class="docutils" />
+<ol class="arabic simple" start="6">
+<li><p><strong>HeartRate (Denyut Jantung)</strong></p></li>
+</ol>
+<ul class="simple">
+<li><p><strong>Rata-rata</strong>: 74.30 bpm</p></li>
+<li><p><strong>Minimum</strong>: 7 bpm, <strong>Maksimum</strong>: 90 bpm</p></li>
+</ul>
+<blockquote>
+<div><p>Nilai minimum yang sangat rendah (7 bpm) kemungkinan adalah kesalahan data (outlier), karena secara medis tidak realistis. Sebagian besar data berada di rentang normal (70–80 bpm).</p>
+</div></blockquote>
+<hr class="docutils" />
+<p>Kesimpulan Umum:</p>
+<ul class="simple">
+<li><p>Data memiliki penyebaran nilai yang cukup luas, terutama pada fitur usia, tekanan darah, dan gula darah.</p></li>
+<li><p>Tidak ada nilai yang hilang, namun terdapat kemungkinan outlier, khususnya pada <code class="docutils literal notranslate"><span class="pre">HeartRate</span></code>.</p></li>
+<li><p>Informasi ini penting untuk menentukan strategi <em>preprocessing</em> seperti normalisasi atau deteksi dan penanganan outlier sebelum pelatihan model machine learning.</p></li>
+</ul>
+</section>
+<section id="distribusi-variabel">
+<h3>distribusi variabel<a class="headerlink" href="#distribusi-variabel" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">--- 5. Distribusi Variabel Kategorikal ---&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Distribusi &#39;RiskLevel&#39;:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;RiskLevel&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Persentase distribusi &#39;RiskLevel&#39;:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;RiskLevel&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">(</span><span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span><span class="p">)</span>
+
+<span class="c1"># Visualisasi distribusi RiskLevel</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">countplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;RiskLevel&#39;</span><span class="p">,</span> <span class="n">palette</span><span class="o">=</span><span class="s1">&#39;viridis&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Distribusi Tingkat Risiko Maternal&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Tingkat Risiko&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Jumlah Pasien&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>--- 5. Distribusi Variabel Kategorikal ---
+Distribusi &#39;RiskLevel&#39;:
+RiskLevel
+low risk     406
+mid risk     336
+high risk    272
+Name: count, dtype: int64
+
+Persentase distribusi &#39;RiskLevel&#39;:
+RiskLevel
+low risk     40.039448
+mid risk     33.136095
+high risk    26.824458
+Name: proportion, dtype: float64
+</pre></div>
+</div>
+<img alt="_images/7d1f5d6dc1ec52efddb54119199296e9076214092e6318e3e24bd83a547be2f4.png" src="_images/7d1f5d6dc1ec52efddb54119199296e9076214092e6318e3e24bd83a547be2f4.png" />
+</div>
+</div>
+</section>
+<section id="distribusi-fitur">
+<h3>distribusi fitur<a class="headerlink" href="#distribusi-fitur" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">--- 6. Distribusi Variabel Numerik ---&quot;</span><span class="p">)</span>
+<span class="n">numerical_cols</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Age&#39;</span><span class="p">,</span> <span class="s1">&#39;SystolicBP&#39;</span><span class="p">,</span> <span class="s1">&#39;DiastolicBP&#39;</span><span class="p">,</span> <span class="s1">&#39;BS&#39;</span><span class="p">,</span> <span class="s1">&#39;BodyTemp&#39;</span><span class="p">,</span> <span class="s1">&#39;HeartRate&#39;</span><span class="p">]</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">col</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">numerical_cols</span><span class="p">):</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">sns</span><span class="o">.</span><span class="n">histplot</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">],</span> <span class="n">kde</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Distribusi </span><span class="si">{</span><span class="n">col</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="n">col</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Frekuensi&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>--- 6. Distribusi Variabel Numerik ---
+</pre></div>
+</div>
+<img alt="_images/e51f6bab09ddb5f195832bfcf5a7df9e66eace770f325504ea87ae46f83427f9.png" src="_images/e51f6bab09ddb5f195832bfcf5a7df9e66eace770f325504ea87ae46f83427f9.png" />
+</div>
+</div>
+</section>
+</section>
+<section id="kualitas-data">
+<h2>Kualitas data<a class="headerlink" href="#kualitas-data" title="Link to this heading">#</a></h2>
+<section id="cek-missing-value">
+<h3>cek missing value<a class="headerlink" href="#cek-missing-value" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">--- 3. Tipe Data dan Missing Values ---&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Tipe data setiap kolom:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">dtypes</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Jumlah missing values per kolom:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">isnull</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Persentase missing values per kolom:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">((</span><span class="n">df</span><span class="o">.</span><span class="n">isnull</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">))</span> <span class="o">*</span> <span class="mi">100</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>--- 3. Tipe Data dan Missing Values ---
+Tipe data setiap kolom:
+Age              int64
+SystolicBP       int64
+DiastolicBP      int64
+BS             float64
+BodyTemp       float64
+HeartRate        int64
+RiskLevel       object
+dtype: object
+
+Jumlah missing values per kolom:
+Age            0
+SystolicBP     0
+DiastolicBP    0
+BS             0
+BodyTemp       0
+HeartRate      0
+RiskLevel      0
+dtype: int64
+
+Persentase missing values per kolom:
+Age            0.0
+SystolicBP     0.0
+DiastolicBP    0.0
+BS             0.0
+BodyTemp       0.0
+HeartRate      0.0
+RiskLevel      0.0
+dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Penjelasan</strong>
+Pada data ini tidak terdapat missing value sehingga pada saat pre-processing tidak dipelrukan melakukan penangnan missing value</p>
+</section>
+<section id="pemeriksaan-outlier">
+<h3>pemeriksaan outlier<a class="headerlink" href="#pemeriksaan-outlier" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sns</span>
+
+<span class="c1"># Muat dataset</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;Maternal Health Risk Data Set.csv&#39;</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">FileNotFoundError</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error: &#39;Maternal Health Risk Data Set.csv&#39; not found. Please make sure the file is in the correct directory.&quot;</span><span class="p">)</span>
+    <span class="n">exit</span><span class="p">()</span>
+
+<span class="n">numerical_cols</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Age&#39;</span><span class="p">,</span> <span class="s1">&#39;SystolicBP&#39;</span><span class="p">,</span> <span class="s1">&#39;DiastolicBP&#39;</span><span class="p">,</span> <span class="s1">&#39;BS&#39;</span><span class="p">,</span> <span class="s1">&#39;BodyTemp&#39;</span><span class="p">,</span> <span class="s1">&#39;HeartRate&#39;</span><span class="p">]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;--- 1. Visualisasi Outlier dengan Box Plot ---&quot;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">col</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">numerical_cols</span><span class="p">):</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="c1"># Ini adalah cara yang lebih bersih untuk menghilangkan warning jika Anda ingin satu warna solid</span>
+    <span class="n">sns</span><span class="o">.</span><span class="n">boxplot</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="n">sns</span><span class="o">.</span><span class="n">color_palette</span><span class="p">(</span><span class="s1">&#39;viridis&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Box Plot of </span><span class="si">{</span><span class="n">col</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="n">col</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>--- 1. Visualisasi Outlier dengan Box Plot ---
+</pre></div>
+</div>
+<img alt="_images/065c758e6c19595edaad5acb7313544c2604efb17aafc66bf331a3f280074325.png" src="_images/065c758e6c19595edaad5acb7313544c2604efb17aafc66bf331a3f280074325.png" />
+</div>
+</div>
+<section id="deteksi-outlier-menggunakan-metode-iqr">
+<h4>Deteksi Outlier Menggunakan Metode IQR<a class="headerlink" href="#deteksi-outlier-menggunakan-metode-iqr" title="Link to this heading">#</a></h4>
+</section>
+<section id="metode-iqr-interquartile-range">
+<h4>Metode IQR (Interquartile Range)<a class="headerlink" href="#metode-iqr-interquartile-range" title="Link to this heading">#</a></h4>
+<p>Metode IQR digunakan untuk mendeteksi nilai-nilai ekstrem (outlier) dalam data numerik. Rumus dasar untuk menghitung rentang interkuartil adalah:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\( \text{IQR} = Q3 - Q1 \)</span></p></li>
+</ul>
+<p>Setelah mendapatkan nilai IQR, kita bisa menentukan batas bawah dan batas atas untuk mendeteksi outlier dengan rumus berikut:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\( \text{Batas Bawah Outlier} = Q1 - 1.5 \times \text{IQR} \)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\( \text{Batas Atas Outlier} = Q3 + 1.5 \times \text{IQR} \)</span></p></li>
+</ul>
+<p>Nilai yang berada di luar rentang tersebut dianggap sebagai <strong>outlier</strong>.</p>
+<hr class="docutils" />
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">--- 2. Identifikasi Outlier dengan Metode IQR ---&quot;</span><span class="p">)</span>
+
+<span class="n">outlier_summary</span> <span class="o">=</span> <span class="p">{}</span>
+
+<span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">numerical_cols</span><span class="p">:</span>
+    <span class="n">Q1</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="mf">0.25</span><span class="p">)</span>
+    <span class="n">Q3</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="mf">0.75</span><span class="p">)</span>
+    <span class="n">IQR</span> <span class="o">=</span> <span class="n">Q3</span> <span class="o">-</span> <span class="n">Q1</span>
+    <span class="n">lower_bound</span> <span class="o">=</span> <span class="n">Q1</span> <span class="o">-</span> <span class="mf">1.5</span> <span class="o">*</span> <span class="n">IQR</span>
+    <span class="n">upper_bound</span> <span class="o">=</span> <span class="n">Q3</span> <span class="o">+</span> <span class="mf">1.5</span> <span class="o">*</span> <span class="n">IQR</span>
+
+    <span class="c1"># Mengidentifikasi outlier</span>
+    <span class="n">outliers</span> <span class="o">=</span> <span class="n">df</span><span class="p">[(</span><span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">lower_bound</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">upper_bound</span><span class="p">)]</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">--- Kolom: </span><span class="si">{</span><span class="n">col</span><span class="si">}</span><span class="s2"> ---&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Q1: </span><span class="si">{</span><span class="n">Q1</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Q3: </span><span class="si">{</span><span class="n">Q3</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  IQR: </span><span class="si">{</span><span class="n">IQR</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Batas Bawah Outlier: </span><span class="si">{</span><span class="n">lower_bound</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Batas Atas Outlier: </span><span class="si">{</span><span class="n">upper_bound</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Jumlah Outlier: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">outliers</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">outliers</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;  Contoh Outlier:&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">outliers</span><span class="p">[[</span><span class="n">col</span><span class="p">]]</span><span class="o">.</span><span class="n">head</span><span class="p">())</span> <span class="c1"># Menampilkan beberapa contoh outlier</span>
+
+    <span class="n">outlier_summary</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;count&#39;</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">outliers</span><span class="p">),</span>
+        <span class="s1">&#39;lower_bound&#39;</span><span class="p">:</span> <span class="n">lower_bound</span><span class="p">,</span>
+        <span class="s1">&#39;upper_bound&#39;</span><span class="p">:</span> <span class="n">upper_bound</span>
+    <span class="p">}</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">--- Ringkasan Outlier per Kolom ---&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">col</span><span class="p">,</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">outlier_summary</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;- **</span><span class="si">{</span><span class="n">col</span><span class="si">}</span><span class="s2">**: Jumlah outlier = </span><span class="si">{</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;count&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2"> (Batas: </span><span class="si">{</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;lower_bound&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> - </span><span class="si">{</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;upper_bound&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>--- 2. Identifikasi Outlier dengan Metode IQR ---
+
+--- Kolom: Age ---
+  Q1: 19.00
+  Q3: 39.00
+  IQR: 20.00
+  Batas Bawah Outlier: -11.00
+  Batas Atas Outlier: 69.00
+  Jumlah Outlier: 1
+  Contoh Outlier:
+     Age
+338   70
+
+--- Kolom: SystolicBP ---
+  Q1: 100.00
+  Q3: 120.00
+  IQR: 20.00
+  Batas Bawah Outlier: 70.00
+  Batas Atas Outlier: 150.00
+  Jumlah Outlier: 10
+  Contoh Outlier:
+     SystolicBP
+123         160
+130         160
+166         160
+262         160
+362         160
+
+--- Kolom: DiastolicBP ---
+  Q1: 65.00
+  Q3: 90.00
+  IQR: 25.00
+  Batas Bawah Outlier: 27.50
+  Batas Atas Outlier: 127.50
+  Jumlah Outlier: 0
+
+--- Kolom: BS ---
+  Q1: 6.90
+  Q3: 8.00
+  IQR: 1.10
+  Batas Bawah Outlier: 5.25
+  Batas Atas Outlier: 9.65
+  Jumlah Outlier: 210
+  Contoh Outlier:
+      BS
+0   15.0
+1   13.0
+7   11.0
+9   18.0
+14  11.0
+
+--- Kolom: BodyTemp ---
+  Q1: 98.00
+  Q3: 98.00
+  IQR: 0.00
+  Batas Bawah Outlier: 98.00
+  Batas Atas Outlier: 98.00
+  Jumlah Outlier: 210
+  Contoh Outlier:
+    BodyTemp
+2      100.0
+7      102.0
+13     100.0
+18     101.0
+35     102.0
+
+--- Kolom: HeartRate ---
+  Q1: 70.00
+  Q3: 80.00
+  IQR: 10.00
+  Batas Bawah Outlier: 55.00
+  Batas Atas Outlier: 95.00
+  Jumlah Outlier: 2
+  Contoh Outlier:
+     HeartRate
+499          7
+908          7
+
+--- Ringkasan Outlier per Kolom ---
+- **Age**: Jumlah outlier = 1 (Batas: -11.00 - 69.00)
+- **SystolicBP**: Jumlah outlier = 10 (Batas: 70.00 - 150.00)
+- **DiastolicBP**: Jumlah outlier = 0 (Batas: 27.50 - 127.50)
+- **BS**: Jumlah outlier = 210 (Batas: 5.25 - 9.65)
+- **BodyTemp**: Jumlah outlier = 210 (Batas: 98.00 - 98.00)
+- **HeartRate**: Jumlah outlier = 2 (Batas: 55.00 - 95.00)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="hasil-deteksi-outlier-per-kolom">
+<h4>Hasil Deteksi Outlier per Kolom<a class="headerlink" href="#hasil-deteksi-outlier-per-kolom" title="Link to this heading">#</a></h4>
+<section id="age-usia">
+<h5>1. <strong>Age (Usia)</strong><a class="headerlink" href="#age-usia" title="Link to this heading">#</a></h5>
+<ul class="simple">
+<li><p>Q1 = 19, Q3 = 39, IQR = 20</p></li>
+<li><p><span class="math notranslate nohighlight">\( \text{Batas Bawah} = 19 - (1.5 \times 20) = -11 \)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\( \text{Batas Atas} = 39 + (1.5 \times 20) = 69 \)</span></p></li>
+<li><p><strong>Jumlah outlier</strong>: 1 (nilai 70)</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="systolicbp-tekanan-darah-sistolik">
+<h5>2. <strong>SystolicBP (Tekanan Darah Sistolik)</strong><a class="headerlink" href="#systolicbp-tekanan-darah-sistolik" title="Link to this heading">#</a></h5>
+<ul class="simple">
+<li><p>Q1 = 100, Q3 = 120, IQR = 20</p></li>
+<li><p><span class="math notranslate nohighlight">\( \text{Batas Bawah} = 100 - (1.5 \times 20) = 70 \)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\( \text{Batas Atas} = 120 + (1.5 \times 20) = 150 \)</span></p></li>
+<li><p><strong>Jumlah outlier</strong>: 10 (nilai-nilai 160)</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="diastolicbp-tekanan-darah-diastolik">
+<h5>3. <strong>DiastolicBP (Tekanan Darah Diastolik)</strong><a class="headerlink" href="#diastolicbp-tekanan-darah-diastolik" title="Link to this heading">#</a></h5>
+<ul class="simple">
+<li><p>Q1 = 65, Q3 = 90, IQR = 25</p></li>
+<li><p><span class="math notranslate nohighlight">\( \text{Batas Bawah} = 65 - (1.5 \times 25) = 27.5 \)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\( \text{Batas Atas} = 90 + (1.5 \times 25) = 127.5 \)</span></p></li>
+<li><p><strong>Jumlah outlier</strong>: 0 (semua nilai dalam batas)</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="bs-blood-sugar-gula-darah">
+<h5>4. <strong>BS (Blood Sugar / Gula Darah)</strong><a class="headerlink" href="#bs-blood-sugar-gula-darah" title="Link to this heading">#</a></h5>
+<ul class="simple">
+<li><p>Q1 = 6.9, Q3 = 8.0, IQR = 1.1</p></li>
+<li><p><span class="math notranslate nohighlight">\( \text{Batas Bawah} = 6.9 - (1.5 \times 1.1) = 5.25 \)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\( \text{Batas Atas} = 8.0 + (1.5 \times 1.1) = 9.65 \)</span></p></li>
+<li><p><strong>Jumlah outlier</strong>: 210 (nilai-nilai di atas 9.65 seperti 13, 15, 18)</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="bodytemp-suhu-tubuh">
+<h5>5. <strong>BodyTemp (Suhu Tubuh)</strong><a class="headerlink" href="#bodytemp-suhu-tubuh" title="Link to this heading">#</a></h5>
+<ul class="simple">
+<li><p>Q1 = 98, Q3 = 98, IQR = 0</p></li>
+<li><p><span class="math notranslate nohighlight">\( \text{Batas Bawah} = 98 - (1.5 \times 0) = 98 \)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\( \text{Batas Atas} = 98 + (1.5 \times 0) = 98 \)</span></p></li>
+<li><p><strong>Jumlah outlier</strong>: 210 (semua nilai ≠ 98 dianggap outlier karena IQR = 0)</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="heartrate-denyut-jantung">
+<h5>6. <strong>HeartRate (Denyut Jantung)</strong><a class="headerlink" href="#heartrate-denyut-jantung" title="Link to this heading">#</a></h5>
+<ul class="simple">
+<li><p>Q1 = 70, Q3 = 80, IQR = 10</p></li>
+<li><p><span class="math notranslate nohighlight">\( \text{Batas Bawah} = 70 - (1.5 \times 10) = 55 \)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\( \text{Batas Atas} = 80 + (1.5 \times 10) = 95 \)</span></p></li>
+<li><p><strong>Jumlah outlier</strong>: 2 (nilai ekstrem: 7)</p></li>
+</ul>
+</section>
+</section>
+</section>
+<hr class="docutils" />
+<section id="ringkasan-outlier">
+<h3>Ringkasan Outlier<a class="headerlink" href="#ringkasan-outlier" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Kolom</p></th>
+<th class="head"><p>Jumlah Outlier</p></th>
+<th class="head"><p>Catatan</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Age</p></td>
+<td><p>1</p></td>
+<td><p>Nilai 70 di atas batas atas (69)</p></td>
+</tr>
+<tr class="row-odd"><td><p>SystolicBP</p></td>
+<td><p>10</p></td>
+<td><p>Tekanan darah tinggi (160 mmHg)</p></td>
+</tr>
+<tr class="row-even"><td><p>DiastolicBP</p></td>
+<td><p>0</p></td>
+<td><p>Tidak ada outlier</p></td>
+</tr>
+<tr class="row-odd"><td><p>BS</p></td>
+<td><p>210</p></td>
+<td><p>Banyak nilai ekstrem menunjukkan pasien dengan gula darah tinggi</p></td>
+</tr>
+<tr class="row-even"><td><p>BodyTemp</p></td>
+<td><p>210</p></td>
+<td><p>Semua nilai ≠ 98 dianggap outlier karena IQR = 0</p></td>
+</tr>
+<tr class="row-odd"><td><p>HeartRate</p></td>
+<td><p>2</p></td>
+<td><p>Nilai 7 sangat tidak normal, kemungkinan kesalahan input</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<hr class="docutils" />
+<section id="kesimpulan">
+<h3>Kesimpulan<a class="headerlink" href="#kesimpulan" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Kolom <code class="docutils literal notranslate"><span class="pre">BS</span></code> dan <code class="docutils literal notranslate"><span class="pre">BodyTemp</span></code> menunjukkan jumlah outlier yang sangat tinggi. Ini perlu ditinjau apakah mencerminkan variasi riil atau adanya kesalahan data.</p></li>
+<li><p>Nilai <code class="docutils literal notranslate"><span class="pre">HeartRate</span></code> sebesar 7 bpm sangat tidak realistis dan kemungkinan besar merupakan data error.</p></li>
+<li><p>Identifikasi outlier penting dilakukan sebagai bagian dari <em>preprocessing</em>, untuk meningkatkan akurasi dan keandalan model machine learning yang akan digunakan.</p></li>
+</ul>
+</section>
+</section>
+<section id="hubungan-antar-fitur">
+<h2>hubungan antar fitur<a class="headerlink" href="#hubungan-antar-fitur" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">--- Hubungan Antar Fitur dan Target ---&quot;</span><span class="p">)</span>
+
+<span class="c1"># Hubungan Age dengan RiskLevel</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">boxplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;RiskLevel&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;Age&#39;</span><span class="p">,</span> <span class="n">palette</span><span class="o">=</span><span class="s1">&#39;pastel&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Usia berdasarkan Tingkat Risiko&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Tingkat Risiko&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Usia&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1"># Hubungan SystolicBP dengan RiskLevel</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">boxplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;RiskLevel&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;SystolicBP&#39;</span><span class="p">,</span> <span class="n">palette</span><span class="o">=</span><span class="s1">&#39;pastel&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Tekanan Darah Sistolik berdasarkan Tingkat Risiko&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Tingkat Risiko&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Tekanan Darah Sistolik&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1"># Anda bisa ulangi untuk fitur numerik lainnya (DiastolicBP, BS, BodyTemp, HeartRate)</span>
+<span class="c1"># Contoh loop untuk semua fitur numerik vs RiskLevel</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">12</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">col</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">numerical_cols</span><span class="p">):</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">sns</span><span class="o">.</span><span class="n">boxplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;RiskLevel&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">col</span><span class="p">,</span> <span class="n">palette</span><span class="o">=</span><span class="s1">&#39;pastel&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">col</span><span class="si">}</span><span class="s1"> berdasarkan Tingkat Risiko&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Tingkat Risiko&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="n">col</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>--- Hubungan Antar Fitur dan Target ---
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipython-input-16-1445206844.py:5: FutureWarning: 
+
+Passing `palette` without assigning `hue` is deprecated and will be removed in v0.14.0. Assign the `x` variable to `hue` and set `legend=False` for the same effect.
+
+  sns.boxplot(data=df, x=&#39;RiskLevel&#39;, y=&#39;Age&#39;, palette=&#39;pastel&#39;)
+</pre></div>
+</div>
+<img alt="_images/a02f66b072c8c6209557c06b378a5615cf01e2a226590eac59acd0f09409956a.png" src="_images/a02f66b072c8c6209557c06b378a5615cf01e2a226590eac59acd0f09409956a.png" />
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipython-input-16-1445206844.py:13: FutureWarning: 
+
+Passing `palette` without assigning `hue` is deprecated and will be removed in v0.14.0. Assign the `x` variable to `hue` and set `legend=False` for the same effect.
+
+  sns.boxplot(data=df, x=&#39;RiskLevel&#39;, y=&#39;SystolicBP&#39;, palette=&#39;pastel&#39;)
+</pre></div>
+</div>
+<img alt="_images/0fcbda5245e6dc9dff9059865011904fc7f99041e30de16e25cef20983b581ed.png" src="_images/0fcbda5245e6dc9dff9059865011904fc7f99041e30de16e25cef20983b581ed.png" />
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipython-input-16-1445206844.py:24: FutureWarning: 
+
+Passing `palette` without assigning `hue` is deprecated and will be removed in v0.14.0. Assign the `x` variable to `hue` and set `legend=False` for the same effect.
+
+  sns.boxplot(data=df, x=&#39;RiskLevel&#39;, y=col, palette=&#39;pastel&#39;)
+/tmp/ipython-input-16-1445206844.py:24: FutureWarning: 
+
+Passing `palette` without assigning `hue` is deprecated and will be removed in v0.14.0. Assign the `x` variable to `hue` and set `legend=False` for the same effect.
+
+  sns.boxplot(data=df, x=&#39;RiskLevel&#39;, y=col, palette=&#39;pastel&#39;)
+/tmp/ipython-input-16-1445206844.py:24: FutureWarning: 
+
+Passing `palette` without assigning `hue` is deprecated and will be removed in v0.14.0. Assign the `x` variable to `hue` and set `legend=False` for the same effect.
+
+  sns.boxplot(data=df, x=&#39;RiskLevel&#39;, y=col, palette=&#39;pastel&#39;)
+/tmp/ipython-input-16-1445206844.py:24: FutureWarning: 
+
+Passing `palette` without assigning `hue` is deprecated and will be removed in v0.14.0. Assign the `x` variable to `hue` and set `legend=False` for the same effect.
+
+  sns.boxplot(data=df, x=&#39;RiskLevel&#39;, y=col, palette=&#39;pastel&#39;)
+/tmp/ipython-input-16-1445206844.py:24: FutureWarning: 
+
+Passing `palette` without assigning `hue` is deprecated and will be removed in v0.14.0. Assign the `x` variable to `hue` and set `legend=False` for the same effect.
+
+  sns.boxplot(data=df, x=&#39;RiskLevel&#39;, y=col, palette=&#39;pastel&#39;)
+/tmp/ipython-input-16-1445206844.py:24: FutureWarning: 
+
+Passing `palette` without assigning `hue` is deprecated and will be removed in v0.14.0. Assign the `x` variable to `hue` and set `legend=False` for the same effect.
+
+  sns.boxplot(data=df, x=&#39;RiskLevel&#39;, y=col, palette=&#39;pastel&#39;)
+</pre></div>
+</div>
+<img alt="_images/db386c03b787afeb4033774c9bbc1f25cb1ceebb5f4c1ed6c148a56990b9d681.png" src="_images/db386c03b787afeb4033774c9bbc1f25cb1ceebb5f4c1ed6c148a56990b9d681.png" />
+</div>
+</div>
+</section>
+<section id="pre-processing">
+<h2>2. Pre-Processing<a class="headerlink" href="#pre-processing" title="Link to this heading">#</a></h2>
+</section>
+<section id="penanganan-outlier">
+<h2>penanganan outlier<a class="headerlink" href="#penanganan-outlier" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span> <span class="c1"># Tambahkan numpy</span>
+
+<span class="c1"># Muat dataset</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">df_cleaned</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;Maternal Health Risk Data Set.csv&#39;</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">FileNotFoundError</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error: &#39;Maternal Health Risk Data Set.csv&#39; not found. Please make sure the file is in the correct directory.&quot;</span><span class="p">)</span>
+    <span class="n">exit</span><span class="p">()</span>
+
+<span class="n">numerical_cols</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Age&#39;</span><span class="p">,</span> <span class="s1">&#39;SystolicBP&#39;</span><span class="p">,</span> <span class="s1">&#39;DiastolicBP&#39;</span><span class="p">,</span> <span class="s1">&#39;BS&#39;</span><span class="p">,</span> <span class="s1">&#39;BodyTemp&#39;</span><span class="p">,</span> <span class="s1">&#39;HeartRate&#39;</span><span class="p">]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;--- Implementasi Penanganan Outlier Terkombinasi ---&quot;</span><span class="p">)</span>
+
+<span class="c1"># --- Penanganan Outlier untuk HeartRate (Deletion) ---</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Menangani HeartRate: Menghapus baris dengan nilai outlier yang sangat tidak realistis.&quot;</span><span class="p">)</span>
+<span class="n">Q1_hr</span> <span class="o">=</span> <span class="n">df_cleaned</span><span class="p">[</span><span class="s1">&#39;HeartRate&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="mf">0.25</span><span class="p">)</span>
+<span class="n">Q3_hr</span> <span class="o">=</span> <span class="n">df_cleaned</span><span class="p">[</span><span class="s1">&#39;HeartRate&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="mf">0.75</span><span class="p">)</span>
+<span class="n">IQR_hr</span> <span class="o">=</span> <span class="n">Q3_hr</span> <span class="o">-</span> <span class="n">Q1_hr</span>
+<span class="n">lower_bound_hr</span> <span class="o">=</span> <span class="n">Q1_hr</span> <span class="o">-</span> <span class="mf">1.5</span> <span class="o">*</span> <span class="n">IQR_hr</span>
+<span class="n">upper_bound_hr</span> <span class="o">=</span> <span class="n">Q3_hr</span> <span class="o">+</span> <span class="mf">1.5</span> <span class="o">*</span> <span class="n">IQR_hr</span>
+
+<span class="n">outlier_heartrate_indices</span> <span class="o">=</span> <span class="n">df_cleaned</span><span class="p">[(</span><span class="n">df_cleaned</span><span class="p">[</span><span class="s1">&#39;HeartRate&#39;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">lower_bound_hr</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">df_cleaned</span><span class="p">[</span><span class="s1">&#39;HeartRate&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">upper_bound_hr</span><span class="p">)]</span><span class="o">.</span><span class="n">index</span>
+<span class="n">initial_rows_hr</span> <span class="o">=</span> <span class="n">df_cleaned</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">df_cleaned</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">outlier_heartrate_indices</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Jumlah baris yang dihapus (HeartRate): </span><span class="si">{</span><span class="n">initial_rows_hr</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">df_cleaned</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Bentuk dataset setelah penghapusan HeartRate outlier: </span><span class="si">{</span><span class="n">df_cleaned</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>--- Implementasi Penanganan Outlier Terkombinasi ---
+
+Menangani HeartRate: Menghapus baris dengan nilai outlier yang sangat tidak realistis.
+Jumlah baris yang dihapus (HeartRate): 2
+Bentuk dataset setelah penghapusan HeartRate outlier: (1012, 7)
+</pre></div>
+</div>
+</div>
+</div>
+<p>Penggunaan metode <strong>deletion</strong> untuk kolom <code class="docutils literal notranslate"><span class="pre">HeartRate</span></code> dipilih karena:</p>
+<ul class="simple">
+<li><p>Outlier bersifat <strong>ekstrem dan tidak valid</strong></p></li>
+<li><p>Jumlahnya <strong>sangat sedikit</strong></p></li>
+<li><p>Tujuannya adalah menjaga kualitas dan keakuratan dataset<br />
+Metode ini efektif ketika data error mudah diidentifikasi dan tidak terlalu banyak, seperti dalam kasus ini.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># --- Penanganan Outlier untuk Age, SystolicBP, BS (Capping/Winsorization) ---</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Menangani Age, SystolicBP, BS: Menerapkan Capping/Winsorization.&quot;</span><span class="p">)</span>
+<span class="n">cols_for_capping</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Age&#39;</span><span class="p">,</span> <span class="s1">&#39;SystolicBP&#39;</span><span class="p">,</span> <span class="s1">&#39;BS&#39;</span><span class="p">]</span>
+
+<span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">cols_for_capping</span><span class="p">:</span>
+    <span class="n">Q1</span> <span class="o">=</span> <span class="n">df_cleaned</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="mf">0.25</span><span class="p">)</span>
+    <span class="n">Q3</span> <span class="o">=</span> <span class="n">df_cleaned</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="mf">0.75</span><span class="p">)</span>
+    <span class="n">IQR</span> <span class="o">=</span> <span class="n">Q3</span> <span class="o">-</span> <span class="n">Q1</span>
+    <span class="n">lower_bound</span> <span class="o">=</span> <span class="n">Q1</span> <span class="o">-</span> <span class="mf">1.5</span> <span class="o">*</span> <span class="n">IQR</span>
+    <span class="n">upper_bound</span> <span class="o">=</span> <span class="n">Q3</span> <span class="o">+</span> <span class="mf">1.5</span> <span class="o">*</span> <span class="n">IQR</span>
+
+    <span class="c1"># Terapkan capping</span>
+    <span class="n">df_cleaned</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_cleaned</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">lower</span><span class="o">=</span><span class="n">lower_bound</span><span class="p">,</span> <span class="n">upper</span><span class="o">=</span><span class="n">upper_bound</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Kolom &#39;</span><span class="si">{</span><span class="n">col</span><span class="si">}</span><span class="s2">&#39;: Nilai di luar [</span><span class="si">{</span><span class="n">lower_bound</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">upper_bound</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">] di-cap.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menangani Age, SystolicBP, BS: Menerapkan Capping/Winsorization.
+Kolom &#39;Age&#39;: Nilai di luar [-11.00, 69.00] di-cap.
+Kolom &#39;SystolicBP&#39;: Nilai di luar [70.00, 150.00] di-cap.
+Kolom &#39;BS&#39;: Nilai di luar [5.25, 9.65] di-cap.
+</pre></div>
+</div>
+</div>
+</div>
+<p>Metode <strong>capping (winsorization)</strong> dipilih untuk kolom <code class="docutils literal notranslate"><span class="pre">Age</span></code>, <code class="docutils literal notranslate"><span class="pre">SystolicBP</span></code>, dan <code class="docutils literal notranslate"><span class="pre">BS</span></code> karena:</p>
+<ul class="simple">
+<li><p>Outlier pada kolom ini <strong>masih valid secara medis</strong>, namun terlalu ekstrem.</p></li>
+<li><p>Menghapus data akan mengurangi ukuran dataset, sedangkan capping <strong>menyederhanakan nilai ekstrem tanpa membuang data</strong>.</p></li>
+<li><p>Membantu model machine learning belajar dari data <strong>tanpa dipengaruhi secara berlebihan oleh nilai outlier</strong>.</p></li>
+</ul>
+<p>Metode ini adalah solusi yang tepat untuk <strong>mengendalikan pengaruh outlier</strong> sambil tetap <strong>mempertahankan integritas data dan informasi klinis penting</strong>.</p>
+<p>Penanganan outlier pada kolom <code class="docutils literal notranslate"><span class="pre">Age</span></code>, <code class="docutils literal notranslate"><span class="pre">SystolicBP</span></code>, dan <code class="docutils literal notranslate"><span class="pre">BS</span></code> telah dilakukan menggunakan metode <strong>Capping (Winsorization)</strong>. Teknik ini membatasi nilai-nilai ekstrem agar tidak melebihi atau lebih rendah dari ambang batas yang ditentukan, berdasarkan metode IQR.</p>
+<p>Berikut adalah hasil capping untuk masing-masing kolom:</p>
+<ul class="simple">
+<li><p><strong>Kolom <code class="docutils literal notranslate"><span class="pre">Age</span></code></strong></p>
+<ul>
+<li><p>Batas bawah: -11.00</p></li>
+<li><p>Batas atas: 69.00</p></li>
+<li><p>Dalam konteks ini, batas bawah tidak berpengaruh karena tidak ada usia negatif dalam data. Namun, nilai usia yang lebih dari 69 tahun (seperti 70) telah diubah menjadi 69 agar tidak terlalu memengaruhi model.</p></li>
+</ul>
+</li>
+<li><p><strong>Kolom <code class="docutils literal notranslate"><span class="pre">SystolicBP</span></code></strong></p>
+<ul>
+<li><p>Batas bawah: 70.00</p></li>
+<li><p>Batas atas: 150.00</p></li>
+<li><p>Nilai tekanan darah sistolik yang lebih tinggi dari 150 mmHg telah dikurangi menjadi 150. Ini mempertahankan data, tetapi menghindari pengaruh nilai ekstrem terhadap model.</p></li>
+</ul>
+</li>
+<li><p><strong>Kolom <code class="docutils literal notranslate"><span class="pre">BS</span></code> (Blood Sugar)</strong></p>
+<ul>
+<li><p>Batas bawah: 5.25</p></li>
+<li><p>Batas atas: 9.65</p></li>
+<li><p>Nilai gula darah yang terlalu tinggi (misalnya 13, 15, 19) telah dibatasi pada angka maksimum 9.65. Jika terdapat nilai di bawah 5.25, nilainya akan dinaikkan ke 5.25. Hal ini penting untuk menghindari bias model akibat nilai ekstrim pada gula darah.</p></li>
+</ul>
+</li>
+</ul>
+<p>Kesimpulannya, metode Capping digunakan untuk meredam pengaruh nilai ekstrem yang masih valid secara medis namun terlalu jauh dari distribusi umum. Metode ini menjaga data tetap utuh tanpa menghapus baris, serta membantu algoritma seperti KNN atau Decision Tree bekerja lebih optimal pada data yang bersih dan terkontrol.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># --- Penanganan Khusus untuk BodyTemp (Tidak menggunakan IQR karena IQR=0) ---</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Menangani BodyTemp: Tidak menggunakan IQR. Mengidentifikasi nilai ekstrem berdasarkan domain.&quot;</span><span class="p">)</span>
+<span class="c1"># Misal, anggap suhu di luar 95.0 dan 104.0 F adalah outlier yang perlu di-cap</span>
+<span class="c1"># Ini adalah asumsi, perlu validasi dari ahli domain</span>
+<span class="n">df_cleaned</span><span class="p">[</span><span class="s1">&#39;BodyTemp&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_cleaned</span><span class="p">[</span><span class="s1">&#39;BodyTemp&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">lower</span><span class="o">=</span><span class="mf">95.0</span><span class="p">,</span> <span class="n">upper</span><span class="o">=</span><span class="mf">104.0</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Kolom &#39;BodyTemp&#39;: Nilai di luar [95.00, 104.00] di-cap (metode hard-coded).&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menangani BodyTemp: Tidak menggunakan IQR. Mengidentifikasi nilai ekstrem berdasarkan domain.
+Kolom &#39;BodyTemp&#39;: Nilai di luar [95.00, 104.00] di-cap (metode hard-coded).
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># --- DiastolicBP tidak memiliki outlier, tidak perlu penanganan. ---</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Kolom DiastolicBP: Tidak ada outlier yang terdeteksi, tidak perlu penanganan.&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">--- Statistik Deskriptif Akhir Setelah Penanganan Outlier ---&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df_cleaned</span><span class="p">[</span><span class="n">numerical_cols</span><span class="p">]</span><span class="o">.</span><span class="n">describe</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Kolom DiastolicBP: Tidak ada outlier yang terdeteksi, tidak perlu penanganan.
+
+--- Statistik Deskriptif Akhir Setelah Penanganan Outlier ---
+               Age   SystolicBP  DiastolicBP           BS     BodyTemp  \
+count  1012.000000  1012.000000  1012.000000  1012.000000  1012.000000   
+mean     29.898221   113.085968    76.463439     7.714279    98.666403   
+std      13.470652    18.193420    13.899372     1.139998     1.372421   
+min      10.000000    70.000000    49.000000     6.000000    98.000000   
+25%      19.000000   100.000000    65.000000     6.900000    98.000000   
+50%      26.000000   120.000000    80.000000     7.500000    98.000000   
+75%      39.000000   120.000000    90.000000     8.000000    98.000000   
+max      69.000000   150.000000   100.000000     9.650000   103.000000   
+
+         HeartRate  
+count  1012.000000  
+mean     74.434783  
+std       7.521857  
+min      60.000000  
+25%      70.000000  
+50%      76.000000  
+75%      80.000000  
+max      90.000000  
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Visualisasi Box Plot setelah semua penanganan untuk verifikasi</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s1">&#39;Box Plots After Combined Outlier Handling&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mf">1.02</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">col</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">numerical_cols</span><span class="p">):</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">sns</span><span class="o">.</span><span class="n">boxplot</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="n">df_cleaned</span><span class="p">[</span><span class="n">col</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="n">sns</span><span class="o">.</span><span class="n">color_palette</span><span class="p">(</span><span class="s1">&#39;viridis&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Box Plot of </span><span class="si">{</span><span class="n">col</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="n">col</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/0cb713f90990950d061902a96090d2936c00450ecf7c90611a75c17090d2e46c.png" src="_images/0cb713f90990950d061902a96090d2936c00450ecf7c90611a75c17090d2e46c.png" />
+</div>
+</div>
+</section>
+<section id="pemrosesan-fitur-kategorical">
+<h2>pemrosesan fitur kategorical<a class="headerlink" href="#pemrosesan-fitur-kategorical" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.preprocessing</span><span class="w"> </span><span class="kn">import</span> <span class="n">LabelEncoder</span><span class="p">,</span> <span class="n">OneHotEncoder</span>
+
+<span class="c1"># --- Asumsi: df_processed sudah tersedia dari tahap preprocessing sebelumnya ---</span>
+<span class="c1"># (Pastikan Anda sudah menjalankan langkah load data, outlier handling, dll.)</span>
+<span class="c1"># Berikut adalah placeholder minimal agar kode dapat dijalankan jika Anda menjalankannya terpisah:</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;Maternal Health Risk Data Set.csv&#39;</span><span class="p">)</span>
+    <span class="n">df_processed</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="c1"># Contoh capping minimal untuk memastikan df_processed memiliki data yang wajar</span>
+    <span class="n">df_processed</span><span class="p">[</span><span class="s1">&#39;HeartRate&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_processed</span><span class="p">[</span><span class="s1">&#39;HeartRate&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">lower</span><span class="o">=</span><span class="mi">60</span><span class="p">,</span> <span class="n">upper</span><span class="o">=</span><span class="mi">90</span><span class="p">)</span>
+    <span class="n">df_processed</span><span class="p">[</span><span class="s1">&#39;Age&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_processed</span><span class="p">[</span><span class="s1">&#39;Age&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">lower</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">upper</span><span class="o">=</span><span class="mi">70</span><span class="p">)</span>
+    <span class="n">df_processed</span><span class="p">[</span><span class="s1">&#39;SystolicBP&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_processed</span><span class="p">[</span><span class="s1">&#39;SystolicBP&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">lower</span><span class="o">=</span><span class="mi">70</span><span class="p">,</span> <span class="n">upper</span><span class="o">=</span><span class="mi">150</span><span class="p">)</span>
+    <span class="n">df_processed</span><span class="p">[</span><span class="s1">&#39;BS&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_processed</span><span class="p">[</span><span class="s1">&#39;BS&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">lower</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">upper</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+    <span class="n">df_processed</span><span class="p">[</span><span class="s1">&#39;BodyTemp&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_processed</span><span class="p">[</span><span class="s1">&#39;BodyTemp&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">lower</span><span class="o">=</span><span class="mi">95</span><span class="p">,</span> <span class="n">upper</span><span class="o">=</span><span class="mi">104</span><span class="p">)</span>
+
+<span class="k">except</span> <span class="ne">FileNotFoundError</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error: &#39;Maternal Health Risk Data Set.csv&#39; not found. Please make sure the file is in the correct directory.&quot;</span><span class="p">)</span>
+    <span class="n">exit</span><span class="p">()</span>
+
+<span class="n">target_col</span> <span class="o">=</span> <span class="s1">&#39;RiskLevel&#39;</span> <span class="c1"># Kolom target</span>
+
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;--- Penanganan Fitur Kategorikal ---&quot;</span><span class="p">)</span>
+
+<span class="c1"># Label Encoding untuk Variabel Target</span>
+<span class="n">label_encoder</span> <span class="o">=</span> <span class="n">LabelEncoder</span><span class="p">()</span>
+<span class="n">df_processed</span><span class="p">[</span><span class="n">target_col</span><span class="p">]</span> <span class="o">=</span> <span class="n">label_encoder</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">df_processed</span><span class="p">[</span><span class="n">target_col</span><span class="p">])</span>
+
+<span class="c1"># --- TAMBAHKAN BARIS INI ---</span>
+<span class="n">class_names</span> <span class="o">=</span> <span class="n">label_encoder</span><span class="o">.</span><span class="n">classes_</span> <span class="c1"># Simpan nama kelas asli</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Nilai unik &#39;</span><span class="si">{</span><span class="n">target_col</span><span class="si">}</span><span class="s2">&#39; setelah Label Encoding: </span><span class="si">{</span><span class="n">df_processed</span><span class="p">[</span><span class="n">target_col</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Pemetaan kelas (original: encoded): </span><span class="si">{</span><span class="nb">list</span><span class="p">(</span><span class="n">label_encoder</span><span class="o">.</span><span class="n">classes_</span><span class="p">)</span><span class="si">}</span><span class="s2"> -&gt; </span><span class="si">{</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">label_encoder</span><span class="o">.</span><span class="n">classes_</span><span class="p">)))</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># One-Hot Encoding untuk Fitur Input Kategorikal (jika ada)</span>
+<span class="c1"># Untuk dataset ini, fitur input sudah numerik, jadi bagian ini tidak mengubah DataFrame.</span>
+<span class="n">categorical_features_input</span> <span class="o">=</span> <span class="p">[]</span> <span class="c1"># List kosong jika tidak ada fitur input kategorikal</span>
+
+<span class="k">if</span> <span class="n">categorical_features_input</span><span class="p">:</span>
+    <span class="n">df_processed</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">get_dummies</span><span class="p">(</span><span class="n">df_processed</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">categorical_features_input</span><span class="p">,</span> <span class="n">drop_first</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Bentuk DataFrame setelah One-Hot Encoding: </span><span class="si">{</span><span class="n">df_processed</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Tidak ada fitur input kategorikal yang perlu di-encode.&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">--- Penanganan Fitur Kategorikal Selesai ---&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>--- Penanganan Fitur Kategorikal ---
+Nilai unik &#39;RiskLevel&#39; setelah Label Encoding: [0 1 2]
+Pemetaan kelas (original: encoded): [&#39;high risk&#39;, &#39;low risk&#39;, &#39;mid risk&#39;] -&gt; [0, 1, 2]
+Tidak ada fitur input kategorikal yang perlu di-encode.
+
+--- Penanganan Fitur Kategorikal Selesai ---
+</pre></div>
+</div>
+</div>
+</div>
+<p>Fitur kategorical yaitu RiskLevel harus di encoding untuk digunakan saat modelling nanti</p>
+</section>
+<section id="pemisahan-fitur-dan-target">
+<h2>pemisahan fitur dan target<a class="headerlink" href="#pemisahan-fitur-dan-target" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Definisikan kolom numerik setelah semua preprocessing yang memengaruhi strukturnya</span>
+<span class="n">numerical_cols</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Age&#39;</span><span class="p">,</span> <span class="s1">&#39;SystolicBP&#39;</span><span class="p">,</span> <span class="s1">&#39;DiastolicBP&#39;</span><span class="p">,</span> <span class="s1">&#39;BS&#39;</span><span class="p">,</span> <span class="s1">&#39;BodyTemp&#39;</span><span class="p">,</span> <span class="s1">&#39;HeartRate&#39;</span><span class="p">]</span>
+<span class="n">target_col</span> <span class="o">=</span> <span class="s1">&#39;RiskLevel&#39;</span>
+
+
+<span class="c1">### 1. Pemisahan Fitur (X) dan Target (y)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;--- 1. Pemisahan Fitur (X) dan Target (y) ---&quot;</span><span class="p">)</span>
+<span class="c1"># Fitur adalah semua kolom numerik kecuali kolom target</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">df_processed</span><span class="p">[</span><span class="n">numerical_cols</span><span class="p">]</span>
+<span class="c1"># Target adalah kolom &#39;RiskLevel&#39; yang sudah di-encode</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">df_processed</span><span class="p">[</span><span class="n">target_col</span><span class="p">]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Bentuk X (Fitur): </span><span class="si">{</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Bentuk y (Target): </span><span class="si">{</span><span class="n">y</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Contoh 5 baris pertama X:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Contoh 5 baris pertama y:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>--- 1. Pemisahan Fitur (X) dan Target (y) ---
+Bentuk X (Fitur): (1014, 6)
+Bentuk y (Target): (1014,)
+
+Contoh 5 baris pertama X:
+   Age  SystolicBP  DiastolicBP    BS  BodyTemp  HeartRate
+0   25         130           80  10.0      98.0         86
+1   35         140           90  10.0      98.0         70
+2   29          90           70   8.0     100.0         80
+3   30         140           85   7.0      98.0         70
+4   35         120           60   6.1      98.0         76
+
+Contoh 5 baris pertama y:
+0    0
+1    0
+2    0
+3    0
+4    1
+Name: RiskLevel, dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="pembagian-data-training-dan-testing-set">
+<h2>Pembagian Data: Training dan Testing Set<a class="headerlink" href="#pembagian-data-training-dan-testing-set" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.model_selection</span><span class="w"> </span><span class="kn">import</span> <span class="n">train_test_split</span> <span class="c1"># Make sure this line is present and executed!</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.preprocessing</span><span class="w"> </span><span class="kn">import</span> <span class="n">StandardScaler</span><span class="p">,</span> <span class="n">LabelEncoder</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">imblearn.over_sampling</span><span class="w"> </span><span class="kn">import</span> <span class="n">SMOTE</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sns</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;Maternal Health Risk Data Set.csv&#39;</span><span class="p">)</span>
+    <span class="n">df_processed</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+
+    <span class="n">df_processed</span><span class="p">[</span><span class="s1">&#39;HeartRate&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_processed</span><span class="p">[</span><span class="s1">&#39;HeartRate&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">lower</span><span class="o">=</span><span class="mi">60</span><span class="p">,</span> <span class="n">upper</span><span class="o">=</span><span class="mi">90</span><span class="p">)</span>
+    <span class="n">df_processed</span><span class="p">[</span><span class="s1">&#39;Age&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_processed</span><span class="p">[</span><span class="s1">&#39;Age&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">lower</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">upper</span><span class="o">=</span><span class="mi">70</span><span class="p">)</span>
+    <span class="n">df_processed</span><span class="p">[</span><span class="s1">&#39;SystolicBP&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_processed</span><span class="p">[</span><span class="s1">&#39;SystolicBP&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">lower</span><span class="o">=</span><span class="mi">70</span><span class="p">,</span> <span class="n">upper</span><span class="o">=</span><span class="mi">150</span><span class="p">)</span>
+    <span class="n">df_processed</span><span class="p">[</span><span class="s1">&#39;BS&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_processed</span><span class="p">[</span><span class="s1">&#39;BS&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">lower</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">upper</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+    <span class="n">df_processed</span><span class="p">[</span><span class="s1">&#39;BodyTemp&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_processed</span><span class="p">[</span><span class="s1">&#39;BodyTemp&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">lower</span><span class="o">=</span><span class="mi">95</span><span class="p">,</span> <span class="n">upper</span><span class="o">=</span><span class="mi">104</span><span class="p">)</span>
+
+    <span class="n">target_col</span> <span class="o">=</span> <span class="s1">&#39;RiskLevel&#39;</span>
+    <span class="n">numerical_cols</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Age&#39;</span><span class="p">,</span> <span class="s1">&#39;SystolicBP&#39;</span><span class="p">,</span> <span class="s1">&#39;DiastolicBP&#39;</span><span class="p">,</span> <span class="s1">&#39;BS&#39;</span><span class="p">,</span> <span class="s1">&#39;BodyTemp&#39;</span><span class="p">,</span> <span class="s1">&#39;HeartRate&#39;</span><span class="p">]</span>
+
+    <span class="c1"># Label Encode the target variable</span>
+    <span class="n">label_encoder</span> <span class="o">=</span> <span class="n">LabelEncoder</span><span class="p">()</span>
+    <span class="n">df_processed</span><span class="p">[</span><span class="n">target_col</span><span class="p">]</span> <span class="o">=</span> <span class="n">label_encoder</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">df_processed</span><span class="p">[</span><span class="n">target_col</span><span class="p">])</span>
+
+    <span class="c1"># Define X and y for this snippet</span>
+    <span class="n">X</span> <span class="o">=</span> <span class="n">df_processed</span><span class="p">[</span><span class="n">numerical_cols</span><span class="p">]</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">df_processed</span><span class="p">[</span><span class="n">target_col</span><span class="p">]</span>
+
+<span class="k">except</span> <span class="ne">FileNotFoundError</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error: &#39;Maternal Health Risk Data Set.csv&#39; not found. Please make sure the file is in the correct directory.&quot;</span><span class="p">)</span>
+    <span class="n">exit</span><span class="p">()</span>
+
+<span class="c1"># --- 2. Pembagian Data: Training dan Testing Set ---</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;--- 2. Pembagian Data: Training dan Testing Set ---&quot;</span><span class="p">)</span>
+<span class="c1"># Membagi data menjadi 70% training dan 30% testing</span>
+<span class="c1"># stratify=y memastikan distribusi kelas pada y_train dan y_test seimbang</span>
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span> <span class="n">stratify</span><span class="o">=</span><span class="n">y</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Bentuk X_train (Fitur Latih): </span><span class="si">{</span><span class="n">X_train</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Bentuk X_test (Fitur Uji): </span><span class="si">{</span><span class="n">X_test</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Bentuk y_train (Target Latih): </span><span class="si">{</span><span class="n">y_train</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Bentuk y_test (Target Uji): </span><span class="si">{</span><span class="n">y_test</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Distribusi kelas &#39;RiskLevel&#39; pada Training Set:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">y_train</span><span class="o">.</span><span class="n">value_counts</span><span class="p">(</span><span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Distribusi kelas &#39;RiskLevel&#39; pada Testing Set:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">y_test</span><span class="o">.</span><span class="n">value_counts</span><span class="p">(</span><span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>--- 2. Pembagian Data: Training dan Testing Set ---
+Bentuk X_train (Fitur Latih): (709, 6)
+Bentuk X_test (Fitur Uji): (305, 6)
+Bentuk y_train (Target Latih): (709,)
+Bentuk y_test (Target Uji): (305,)
+
+Distribusi kelas &#39;RiskLevel&#39; pada Training Set:
+RiskLevel
+1    40.056417
+2    33.145275
+0    26.798307
+Name: proportion, dtype: float64
+
+Distribusi kelas &#39;RiskLevel&#39; pada Testing Set:
+RiskLevel
+1    40.000000
+2    33.114754
+0    26.885246
+Name: proportion, dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="normalisasi">
+<h2>Normalisasi<a class="headerlink" href="#normalisasi" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># --- 8. Normalisasi (Min-Max Scaling) ---</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">--- 8. Normalisasi (Min-Max Scaling) ---&quot;</span><span class="p">)</span>
+<span class="c1"># Menggunakan MinMaxScaler untuk mengubah data ke rentang 0-1</span>
+<span class="n">scaler</span> <span class="o">=</span> <span class="n">MinMaxScaler</span><span class="p">()</span>
+
+<span class="c1"># Latih scaler pada data pelatihan dan transformasikan data pelatihan</span>
+<span class="n">X_train_scaled</span> <span class="o">=</span> <span class="n">scaler</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X_train</span><span class="p">)</span>
+<span class="c1"># Transformasikan data pengujian menggunakan scaler yang sama</span>
+<span class="n">X_test_scaled</span> <span class="o">=</span> <span class="n">scaler</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+
+<span class="c1"># Mengubah kembali ke DataFrame untuk kemudahan inspeksi</span>
+<span class="n">X_train_normalized_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">X_train_scaled</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">numerical_cols</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">X_train</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+<span class="n">X_test_normalized_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">X_test_scaled</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">numerical_cols</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">X_test</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Fitur pelatihan dan pengujian berhasil dinormalisasi (Min-Max Scaling).&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">--- Statistik Deskriptif X_train setelah Normalisasi (Min-Max Scaling) ---&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">X_train_normalized_df</span><span class="o">.</span><span class="n">describe</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>--- 8. Normalisasi (Min-Max Scaling) ---
+Fitur pelatihan dan pengujian berhasil dinormalisasi (Min-Max Scaling).
+
+--- Statistik Deskriptif X_train setelah Normalisasi (Min-Max Scaling) ---
+              Age  SystolicBP  DiastolicBP          BS    BodyTemp   HeartRate
+count  709.000000  709.000000   709.000000  709.000000  709.000000  709.000000
+mean     0.331288    0.538946     0.538566    0.449891    0.140197    0.490127
+std      0.224821    0.230653     0.272216    0.317225    0.280851    0.254402
+min      0.000000    0.000000     0.000000    0.000000    0.000000    0.000000
+25%      0.150000    0.312500     0.313725    0.225000    0.000000    0.333333
+50%      0.283333    0.625000     0.607843    0.375000    0.000000    0.533333
+75%      0.500000    0.625000     0.803922    0.500000    0.000000    0.666667
+max      1.000000    1.000000     1.000000    1.000000    1.000000    1.000000
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="penanganan-imbalance-data">
+<h2>penanganan imbalance data<a class="headerlink" href="#penanganan-imbalance-data" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">--- 4. Penanganan Imbalanced Data (Opsional) ---&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Distribusi kelas target di data pelatihan sebelum resampling:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">y_train</span><span class="o">.</span><span class="n">value_counts</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Persentase distribusi kelas target di data pelatihan:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">y_train</span><span class="o">.</span><span class="n">value_counts</span><span class="p">(</span><span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span><span class="p">)</span>
+
+<span class="c1"># Cek rasio kelas minoritas. Di dataset ini, kelas cukup seimbang, jadi SMOTE mungkin tidak perlu.</span>
+<span class="n">min_class_ratio</span> <span class="o">=</span> <span class="n">y_train</span><span class="o">.</span><span class="n">value_counts</span><span class="p">(</span><span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
+<span class="k">if</span> <span class="n">min_class_ratio</span> <span class="o">&lt;</span> <span class="mf">0.20</span><span class="p">:</span> <span class="c1"># Ambil ambang batas 20% sebagai indikator ketidakseimbangan yang signifikan</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Deteksi ketidakseimbangan kelas. Melakukan oversampling dengan SMOTE...&quot;</span><span class="p">)</span>
+    <span class="n">smote</span> <span class="o">=</span> <span class="n">SMOTE</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+    <span class="n">X_train_final</span><span class="p">,</span> <span class="n">y_train_final</span> <span class="o">=</span> <span class="n">smote</span><span class="o">.</span><span class="n">fit_resample</span><span class="p">(</span><span class="n">X_train_scaled</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Distribusi kelas target di data pelatihan setelah SMOTE:&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">y_train_final</span><span class="p">)</span><span class="o">.</span><span class="n">value_counts</span><span class="p">())</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Persentase distribusi kelas target setelah SMOTE:&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">y_train_final</span><span class="p">)</span><span class="o">.</span><span class="n">value_counts</span><span class="p">(</span><span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Kelas target dianggap seimbang. Tidak diperlukan resampling pada tahap ini.&quot;</span><span class="p">)</span>
+    <span class="n">X_train_final</span> <span class="o">=</span> <span class="n">X_train_scaled</span>
+    <span class="n">y_train_final</span> <span class="o">=</span> <span class="n">y_train</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">--- Data Preprocessing Selesai ---&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Data pelatihan akhir (X_train_final, y_train_final) dan data pengujian (X_test_scaled, y_test) siap untuk pemodelan.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>--- 4. Penanganan Imbalanced Data (Opsional) ---
+Distribusi kelas target di data pelatihan sebelum resampling:
+RiskLevel
+1    284
+2    235
+0    190
+Name: count, dtype: int64
+
+Persentase distribusi kelas target di data pelatihan:
+RiskLevel
+1    40.056417
+2    33.145275
+0    26.798307
+Name: proportion, dtype: float64
+Kelas target dianggap seimbang. Tidak diperlukan resampling pada tahap ini.
+
+--- Data Preprocessing Selesai ---
+Data pelatihan akhir (X_train_final, y_train_final) dan data pengujian (X_test_scaled, y_test) siap untuk pemodelan.
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="modelling-dan-evaluasi">
+<h1>Modelling dan evaluasi<a class="headerlink" href="#modelling-dan-evaluasi" title="Link to this heading">#</a></h1>
+<section id="knn">
+<h2>KNN<a class="headerlink" href="#knn" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.neighbors</span><span class="w"> </span><span class="kn">import</span> <span class="n">KNeighborsClassifier</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">accuracy_score</span><span class="p">,</span> <span class="n">classification_report</span><span class="p">,</span> <span class="n">confusion_matrix</span><span class="p">,</span> <span class="n">ConfusionMatrixDisplay</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+
+<span class="c1"># Pastikan Anda telah menjalankan blok kode preprocessing di atas</span>
+<span class="c1"># untuk memastikan X_train_final, y_train_final, X_test_scaled, y_test, dan class_names tersedia.</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">--- Model: K-Nearest Neighbors (KNN) Classifier ---&quot;</span><span class="p">)</span>
+
+<span class="c1"># Inisialisasi model KNN</span>
+<span class="c1"># n_neighbors adalah hyperparameter, bisa di-tuning untuk performa optimal</span>
+<span class="n">knn_model</span> <span class="o">=</span> <span class="n">KNeighborsClassifier</span><span class="p">(</span><span class="n">n_neighbors</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+
+<span class="c1"># Latih model menggunakan data pelatihan yang sudah diproses</span>
+<span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="n">knn_model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train_final</span><span class="p">,</span> <span class="n">y_train_final</span><span class="p">)</span>
+<span class="n">end_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Waktu pelatihan KNN: </span><span class="si">{</span><span class="n">end_time</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">start_time</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2"> detik&quot;</span><span class="p">)</span>
+
+<span class="c1"># Buat prediksi pada data pengujian yang sudah diskalakan</span>
+<span class="n">y_pred_knn</span> <span class="o">=</span> <span class="n">knn_model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test_scaled</span><span class="p">)</span>
+
+<span class="c1"># --- Evaluasi Model KNN ---</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">--- Evaluasi Model KNN ---&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Akurasi: </span><span class="si">{</span><span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span><span class="w"> </span><span class="n">y_pred_knn</span><span class="p">)</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Laporan Klasifikasi:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">classification_report</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred_knn</span><span class="p">,</span> <span class="n">target_names</span><span class="o">=</span><span class="n">class_names</span><span class="p">))</span>
+
+<span class="c1"># Visualisasi Confusion Matrix KNN</span>
+<span class="n">cm_knn</span> <span class="o">=</span> <span class="n">confusion_matrix</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred_knn</span><span class="p">)</span>
+<span class="n">disp_knn</span> <span class="o">=</span> <span class="n">ConfusionMatrixDisplay</span><span class="p">(</span><span class="n">confusion_matrix</span><span class="o">=</span><span class="n">cm_knn</span><span class="p">,</span> <span class="n">display_labels</span><span class="o">=</span><span class="n">class_names</span><span class="p">)</span>
+<span class="n">disp_knn</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">cmap</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">Blues</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Confusion Matrix: KNN&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>--- Model: K-Nearest Neighbors (KNN) Classifier ---
+Waktu pelatihan KNN: 0.0108 detik
+
+--- Evaluasi Model KNN ---
+Akurasi: 0.6951
+
+Laporan Klasifikasi:
+              precision    recall  f1-score   support
+
+   high risk       0.89      0.83      0.86        82
+    low risk       0.67      0.73      0.70       122
+    mid risk       0.57      0.54      0.56       101
+
+    accuracy                           0.70       305
+   macro avg       0.71      0.70      0.71       305
+weighted avg       0.70      0.70      0.70       305
+</pre></div>
+</div>
+<img alt="_images/84169553ca8f5a231c1c776178e184854660bb925a8459596c7e36687deb8ec7.png" src="_images/84169553ca8f5a231c1c776178e184854660bb925a8459596c7e36687deb8ec7.png" />
+</div>
+</div>
+</section>
+<section id="naive-bayes">
+<h2>Naive bayes<a class="headerlink" href="#naive-bayes" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.naive_bayes</span><span class="w"> </span><span class="kn">import</span> <span class="n">GaussianNB</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">accuracy_score</span><span class="p">,</span> <span class="n">classification_report</span><span class="p">,</span> <span class="n">confusion_matrix</span><span class="p">,</span> <span class="n">ConfusionMatrixDisplay</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+
+<span class="c1"># Pastikan Anda telah menjalankan blok kode preprocessing di atas</span>
+<span class="c1"># untuk memastikan X_train_final, y_train_final, X_test_scaled, y_test, dan class_names tersedia.</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">--- Model: Gaussian Naive Bayes Classifier ---&quot;</span><span class="p">)</span>
+
+<span class="c1"># Inisialisasi model Gaussian Naive Bayes</span>
+<span class="n">nb_model</span> <span class="o">=</span> <span class="n">GaussianNB</span><span class="p">()</span>
+
+<span class="c1"># Latih model menggunakan data pelatihan yang sudah diproses</span>
+<span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="n">nb_model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train_final</span><span class="p">,</span> <span class="n">y_train_final</span><span class="p">)</span>
+<span class="n">end_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Waktu pelatihan Naive Bayes: </span><span class="si">{</span><span class="n">end_time</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">start_time</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2"> detik&quot;</span><span class="p">)</span>
+
+<span class="c1"># Buat prediksi pada data pengujian yang sudah diskalakan</span>
+<span class="n">y_pred_nb</span> <span class="o">=</span> <span class="n">nb_model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test_scaled</span><span class="p">)</span>
+
+<span class="c1"># --- Evaluasi Model Gaussian Naive Bayes ---</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">--- Evaluasi Model Gaussian Naive Bayes ---&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Akurasi: </span><span class="si">{</span><span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span><span class="w"> </span><span class="n">y_pred_nb</span><span class="p">)</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Laporan Klasifikasi:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">classification_report</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred_nb</span><span class="p">,</span> <span class="n">target_names</span><span class="o">=</span><span class="n">class_names</span><span class="p">))</span>
+
+<span class="c1"># Visualisasi Confusion Matrix Naive Bayes</span>
+<span class="n">cm_nb</span> <span class="o">=</span> <span class="n">confusion_matrix</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred_nb</span><span class="p">)</span>
+<span class="n">disp_nb</span> <span class="o">=</span> <span class="n">ConfusionMatrixDisplay</span><span class="p">(</span><span class="n">confusion_matrix</span><span class="o">=</span><span class="n">cm_nb</span><span class="p">,</span> <span class="n">display_labels</span><span class="o">=</span><span class="n">class_names</span><span class="p">)</span>
+<span class="n">disp_nb</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">cmap</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">Blues</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Confusion Matrix: Gaussian Naive Bayes&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>--- Model: Gaussian Naive Bayes Classifier ---
+Waktu pelatihan Naive Bayes: 0.0030 detik
+
+--- Evaluasi Model Gaussian Naive Bayes ---
+Akurasi: 0.6328
+
+Laporan Klasifikasi:
+              precision    recall  f1-score   support
+
+   high risk       0.90      0.78      0.84        82
+    low risk       0.58      0.89      0.70       122
+    mid risk       0.43      0.21      0.28       101
+
+    accuracy                           0.63       305
+   macro avg       0.64      0.62      0.61       305
+weighted avg       0.62      0.63      0.60       305
+</pre></div>
+</div>
+<img alt="_images/fe00248f20f22ebbadea29e4e8aeec9f165a20b1783ed4351ac7ac302224e84a.png" src="_images/fe00248f20f22ebbadea29e4e8aeec9f165a20b1783ed4351ac7ac302224e84a.png" />
+</div>
+</div>
+</section>
+<section id="decition-tree">
+<h2>decition tree<a class="headerlink" href="#decition-tree" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.tree</span><span class="w"> </span><span class="kn">import</span> <span class="n">DecisionTreeClassifier</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">accuracy_score</span><span class="p">,</span> <span class="n">classification_report</span><span class="p">,</span> <span class="n">confusion_matrix</span><span class="p">,</span> <span class="n">ConfusionMatrixDisplay</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+
+<span class="c1"># Pastikan Anda telah menjalankan blok kode preprocessing di atas</span>
+<span class="c1"># untuk memastikan X_train_final, y_train_final, X_test_scaled, y_test, dan class_names tersedia.</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">--- Model: Decision Tree Classifier ---&quot;</span><span class="p">)</span>
+
+<span class="c1"># Inisialisasi model Decision Tree</span>
+<span class="c1"># random_state digunakan untuk memastikan hasil yang reproduktif</span>
+<span class="n">dt_model</span> <span class="o">=</span> <span class="n">DecisionTreeClassifier</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+
+<span class="c1"># Latih model menggunakan data pelatihan yang sudah diproses</span>
+<span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="n">dt_model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train_final</span><span class="p">,</span> <span class="n">y_train_final</span><span class="p">)</span>
+<span class="n">end_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Waktu pelatihan Decision Tree: </span><span class="si">{</span><span class="n">end_time</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">start_time</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2"> detik&quot;</span><span class="p">)</span>
+
+<span class="c1"># Buat prediksi pada data pengujian yang sudah diskalakan</span>
+<span class="n">y_pred_dt</span> <span class="o">=</span> <span class="n">dt_model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test_scaled</span><span class="p">)</span>
+
+<span class="c1"># --- Evaluasi Model Decision Tree ---</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">--- Evaluasi Model Decision Tree ---&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Akurasi: </span><span class="si">{</span><span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span><span class="w"> </span><span class="n">y_pred_dt</span><span class="p">)</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Laporan Klasifikasi:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">classification_report</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred_dt</span><span class="p">,</span> <span class="n">target_names</span><span class="o">=</span><span class="n">class_names</span><span class="p">))</span>
+
+<span class="c1"># Visualisasi Confusion Matrix Decision Tree</span>
+<span class="n">cm_dt</span> <span class="o">=</span> <span class="n">confusion_matrix</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred_dt</span><span class="p">)</span>
+<span class="n">disp_dt</span> <span class="o">=</span> <span class="n">ConfusionMatrixDisplay</span><span class="p">(</span><span class="n">confusion_matrix</span><span class="o">=</span><span class="n">cm_dt</span><span class="p">,</span> <span class="n">display_labels</span><span class="o">=</span><span class="n">class_names</span><span class="p">)</span>
+<span class="n">disp_dt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">cmap</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">Blues</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Confusion Matrix: Decision Tree&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>--- Model: Decision Tree Classifier ---
+Waktu pelatihan Decision Tree: 0.0057 detik
+
+--- Evaluasi Model Decision Tree ---
+Akurasi: 0.8197
+
+Laporan Klasifikasi:
+              precision    recall  f1-score   support
+
+   high risk       0.94      0.88      0.91        82
+    low risk       0.84      0.81      0.82       122
+    mid risk       0.72      0.78      0.75       101
+
+    accuracy                           0.82       305
+   macro avg       0.83      0.82      0.83       305
+weighted avg       0.82      0.82      0.82       305
+</pre></div>
+</div>
+<img alt="_images/1e3ea55842fa6f6ca700eb98404a5838825d0aab898bd66b63cda299ba6deb89.png" src="_images/1e3ea55842fa6f6ca700eb98404a5838825d0aab898bd66b63cda299ba6deb89.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">joblib</span>
+
+<span class="c1"># Pastikan dt_model, scaler, dan label_encoder sudah terdefinisi dari sel-sel sebelumnya</span>
+
+<span class="c1"># Simpan model Decision Tree</span>
+<span class="n">joblib</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">dt_model</span><span class="p">,</span> <span class="s1">&#39;decision_tree_model.pkl&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Model Decision Tree disimpan sebagai &#39;decision_tree_model.pkl&#39;&quot;</span><span class="p">)</span>
+
+<span class="c1"># Simpan scaler (MinMaxScaler)</span>
+<span class="n">joblib</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">scaler</span><span class="p">,</span> <span class="s1">&#39;minmax_scaler.pkl&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;MinMaxScaler disimpan sebagai &#39;minmax_scaler.pkl&#39;&quot;</span><span class="p">)</span>
+
+<span class="c1"># Simpan label_encoder</span>
+<span class="n">joblib</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">label_encoder</span><span class="p">,</span> <span class="s1">&#39;label_encoder.pkl&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;LabelEncoder disimpan sebagai &#39;label_encoder.pkl&#39;&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Semua artefak model berhasil disimpan!&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Model Decision Tree disimpan sebagai &#39;decision_tree_model.pkl&#39;
+MinMaxScaler disimpan sebagai &#39;minmax_scaler.pkl&#39;
+LabelEncoder disimpan sebagai &#39;label_encoder.pkl&#39;
+
+Semua artefak model berhasil disimpan!
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id1">
+<h1>Kesimpulan<a class="headerlink" href="#id1" title="Link to this heading">#</a></h1>
+<p>Berdasarkan hasil evaluasi terhadap tiga algoritma klasifikasi (K-Nearest Neighbors, Gaussian Naive Bayes, dan Decision Tree), berikut adalah kesimpulan perbandingan performa model dalam mengklasifikasikan risiko kesehatan ibu hamil:</p>
+<hr class="docutils" />
+<p><strong>Model 1: K-Nearest Neighbors (KNN)</strong></p>
+<ul class="simple">
+<li><p><strong>Akurasi</strong>: 69.5%</p></li>
+<li><p><strong>F1-score tertinggi</strong> pada kelas <code class="docutils literal notranslate"><span class="pre">high</span> <span class="pre">risk</span></code> (0.86), namun <strong>rendah</strong> pada <code class="docutils literal notranslate"><span class="pre">mid</span> <span class="pre">risk</span></code> (0.56).</p></li>
+<li><p>Confusion matrix menunjukkan bahwa banyak kasus <code class="docutils literal notranslate"><span class="pre">mid</span> <span class="pre">risk</span></code> salah diklasifikasikan sebagai <code class="docutils literal notranslate"><span class="pre">low</span> <span class="pre">risk</span></code>.</p></li>
+<li><p><strong>Kelebihan</strong>:</p>
+<ul>
+<li><p>Mudah diimplementasikan dan cepat dalam inferensi.</p></li>
+<li><p>Cukup baik untuk kasus dengan distribusi fitur yang seimbang.</p></li>
+</ul>
+</li>
+<li><p><strong>Kekurangan</strong>:</p>
+<ul>
+<li><p>Sensitif terhadap skala dan distribusi data.</p></li>
+<li><p>Kurang baik dalam menangani kelas yang tidak terpisah jelas (overlapping).</p></li>
+</ul>
+</li>
+</ul>
+<hr class="docutils" />
+<p><strong>Model 2: Gaussian Naive Bayes</strong></p>
+<ul class="simple">
+<li><p><strong>Akurasi</strong>: 63.28% (terendah dari ketiganya)</p></li>
+<li><p><strong>Recall sangat tinggi</strong> untuk <code class="docutils literal notranslate"><span class="pre">low</span> <span class="pre">risk</span></code> (0.89), tetapi <strong>sangat rendah</strong> untuk <code class="docutils literal notranslate"><span class="pre">mid</span> <span class="pre">risk</span></code> (0.21).</p></li>
+<li><p>Banyak data <code class="docutils literal notranslate"><span class="pre">mid</span> <span class="pre">risk</span></code> diklasifikasikan keliru sebagai <code class="docutils literal notranslate"><span class="pre">low</span> <span class="pre">risk</span></code>.</p></li>
+<li><p><strong>Kelebihan</strong>:</p>
+<ul>
+<li><p>Sangat cepat untuk pelatihan dan prediksi.</p></li>
+<li><p>Cocok untuk data yang memenuhi asumsi distribusi normal.</p></li>
+</ul>
+</li>
+<li><p><strong>Kekurangan</strong>:</p>
+<ul>
+<li><p>Asumsi independensi antar fitur sering tidak sesuai dalam data medis.</p></li>
+<li><p>Performa buruk pada kelas <code class="docutils literal notranslate"><span class="pre">mid</span> <span class="pre">risk</span></code>.</p></li>
+</ul>
+</li>
+</ul>
+<hr class="docutils" />
+<p><strong>Model 3: Decision Tree</strong></p>
+<ul class="simple">
+<li><p><strong>Akurasi</strong>: 81.97% (tertinggi)</p></li>
+<li><p><strong>Performa stabil</strong> di semua kelas dengan f1-score:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">high</span> <span class="pre">risk</span></code>: 0.91</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">low</span> <span class="pre">risk</span></code>: 0.82</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">mid</span> <span class="pre">risk</span></code>: 0.75</p></li>
+</ul>
+</li>
+<li><p>Confusion matrix menunjukkan prediksi yang lebih seimbang dan sedikit kesalahan antar kelas.</p></li>
+<li><p><strong>Kelebihan</strong>:</p>
+<ul>
+<li><p>Dapat menangkap hubungan kompleks antar fitur.</p></li>
+<li><p>Tidak memerlukan normalisasi fitur.</p></li>
+</ul>
+</li>
+<li><p><strong>Kekurangan</strong>:</p>
+<ul>
+<li><p>Berisiko overfitting jika tidak dilakukan pruning.</p></li>
+</ul>
+</li>
+</ul>
+<hr class="docutils" />
+<p><strong>Kesimpulan Umum</strong></p>
+<ul class="simple">
+<li><p><strong>Decision Tree</strong> adalah model terbaik untuk klasifikasi risiko kesehatan ibu hamil dalam kasus ini, dengan akurasi dan f1-score tertinggi serta distribusi prediksi yang paling seimbang.</p></li>
+<li><p><strong>KNN</strong> masih layak digunakan sebagai model alternatif, meskipun tidak seimbang dalam menangani kelas <code class="docutils literal notranslate"><span class="pre">mid</span> <span class="pre">risk</span></code>.</p></li>
+<li><p><strong>Gaussian Naive Bayes</strong> kurang cocok untuk dataset ini karena menghasilkan prediksi yang bias terhadap kelas <code class="docutils literal notranslate"><span class="pre">low</span> <span class="pre">risk</span></code>.</p></li>
+</ul>
+<p><strong>Rekomendasi</strong><br />
+Gunakan <strong>Decision Tree</strong> sebagai model utama. Untuk meningkatkan performa lebih lanjut, pertimbangkan penggunaan metode ensemble seperti <strong>Random Forest</strong> atau <strong>Gradient Boosting</strong>, serta lakukan validasi silang (<em>cross-validation</em>) dan tuning hyperparameter secara optimal.</p>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="Pra_Uas.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Klasifikasi Gagal Jantung Menggunakan Algoritma SVM, Naive Bayes, dan Decition Tree</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Implementasi KNN, Naive Bayes, dan Decision Tree untuk Klasifikasi Risiko Kesehatan Ibu Hamil</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pendahuluan">Pendahuluan</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#aplikasi-prediksi-risiko-kesehatan-ibu">Aplikasi Prediksi Risiko Kesehatan Ibu</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-undertanding">1. data Undertanding</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#struktur-data">struktur data</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#eksplorasi-data">Eksplorasi Data</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#statistik-deskriptif">statistik deskriptif</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#distribusi-variabel">distribusi variabel</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#distribusi-fitur">distribusi fitur</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kualitas-data">Kualitas data</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cek-missing-value">cek missing value</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pemeriksaan-outlier">pemeriksaan outlier</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#deteksi-outlier-menggunakan-metode-iqr">Deteksi Outlier Menggunakan Metode IQR</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#metode-iqr-interquartile-range">Metode IQR (Interquartile Range)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#hasil-deteksi-outlier-per-kolom">Hasil Deteksi Outlier per Kolom</a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#age-usia">1. <strong>Age (Usia)</strong></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#systolicbp-tekanan-darah-sistolik">2. <strong>SystolicBP (Tekanan Darah Sistolik)</strong></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#diastolicbp-tekanan-darah-diastolik">3. <strong>DiastolicBP (Tekanan Darah Diastolik)</strong></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#bs-blood-sugar-gula-darah">4. <strong>BS (Blood Sugar / Gula Darah)</strong></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#bodytemp-suhu-tubuh">5. <strong>BodyTemp (Suhu Tubuh)</strong></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#heartrate-denyut-jantung">6. <strong>HeartRate (Denyut Jantung)</strong></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ringkasan-outlier">Ringkasan Outlier</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#kesimpulan">Kesimpulan</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hubungan-antar-fitur">hubungan antar fitur</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pre-processing">2. Pre-Processing</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#penanganan-outlier">penanganan outlier</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pemrosesan-fitur-kategorical">pemrosesan fitur kategorical</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pemisahan-fitur-dan-target">pemisahan fitur dan target</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pembagian-data-training-dan-testing-set">Pembagian Data: Training dan Testing Set</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#normalisasi">Normalisasi</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#penanganan-imbalance-data">penanganan imbalance data</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#modelling-dan-evaluasi">Modelling dan evaluasi</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#knn">KNN</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#naive-bayes">Naive bayes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#decition-tree">decition tree</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Kesimpulan</a></li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Shovya Lily Lau
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

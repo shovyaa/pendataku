@@ -18,27 +18,39 @@ Traceback (most recent call last):
     raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
 nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
 ------------------
-# Step 1: Upload file CSV
-from google.colab import files
-uploaded = files.upload()
-
-# Step 2: Import library
 import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
 
-# Step 3: Baca file CSV
-filename = list(uploaded.keys())[0]
-df = pd.read_csv(filename)
+# Muat dataset
+try:
+    df = pd.read_csv('Maternal Health Risk Data Set.csv')
+except FileNotFoundError:
+    print("Error: 'Maternal Health Risk Data Set.csv' not found. Please make sure the file is in the correct directory.")
+    exit()
+
+print("--- 1. Tinjauan Awal Data ---")
+print("5 baris pertama:")
+print(df.head())
+print("\n5 baris terakhir:")
+print(df.tail())
 
 ------------------
 
+----- stdout -----
+Error: 'Maternal Health Risk Data Set.csv' not found. Please make sure the file is in the correct directory.
+--- 1. Tinjauan Awal Data ---
+5 baris pertama:
+------------------
 
 [1;31m---------------------------------------------------------------------------[0m
-[1;31mModuleNotFoundError[0m                       Traceback (most recent call last)
-Cell [1;32mIn[1], line 2[0m
-[0;32m      1[0m [38;5;66;03m# Step 1: Upload file CSV[39;00m
-[1;32m----> 2[0m [38;5;28;01mfrom[39;00m[38;5;250m [39m[38;5;21;01mgoogle[39;00m[38;5;21;01m.[39;00m[38;5;21;01mcolab[39;00m[38;5;250m [39m[38;5;28;01mimport[39;00m files
-[0;32m      3[0m uploaded [38;5;241m=[39m files[38;5;241m.[39mupload()
-[0;32m      5[0m [38;5;66;03m# Step 2: Import library[39;00m
+[1;31mNameError[0m                                 Traceback (most recent call last)
+Cell [1;32mIn[1], line 14[0m
+[0;32m     12[0m [38;5;28mprint[39m([38;5;124m"[39m[38;5;124m--- 1. Tinjauan Awal Data ---[39m[38;5;124m"[39m)
+[0;32m     13[0m [38;5;28mprint[39m([38;5;124m"[39m[38;5;124m5 baris pertama:[39m[38;5;124m"[39m)
+[1;32m---> 14[0m [38;5;28mprint[39m([43mdf[49m[38;5;241m.[39mhead())
+[0;32m     15[0m [38;5;28mprint[39m([38;5;124m"[39m[38;5;130;01m\n[39;00m[38;5;124m5 baris terakhir:[39m[38;5;124m"[39m)
+[0;32m     16[0m [38;5;28mprint[39m(df[38;5;241m.[39mtail())
 
-[1;31mModuleNotFoundError[0m: No module named 'google'
+[1;31mNameError[0m: name 'df' is not defined
 
